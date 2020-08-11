@@ -1,0 +1,17 @@
+prefix: '&a[JulySafe]&f'
+chat_limit:
+  interval_deny: '${prefix} &c发言太快了, 请等待 ${seconds}秒.'
+  badword_deny: '${prefix} &c请文明发言.'
+anti_illegal_player:
+  ban: '${prefix} 非法玩家'
+clean_entity:
+  finished: '&a&l[青结工] &e&l本次清理了 &c&l${count}个 &e&l生物.'
+  countdown_boss_bar: '&c&l${seconds}秒后 将清理怪物, 请做好准备'
+clean_drop:
+  finished: '&a&l[青结工] &e&l本次清理了 &c&l${count}个 &e&l掉落物.'
+  countdown_boss_bar: '&c&l${seconds}秒后 将清理地面掉落物, 请尽快捡起贵重物品'
+redstone_limit:
+  date_time_format: 'yyyy/MM/dd HH:mm:ss'
+  deny: '${prefix} &c区块 (${x},${y},${z}) 红石频率超过阈值, 将在 ${expired} 后恢复.'
+quickshop_bug_fix:
+  deny: "${prefix} &c你不能在箱子下放漏斗, 你可以先放漏斗再放箱子."

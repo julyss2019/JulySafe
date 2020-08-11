@@ -1,0 +1,11 @@
+name: JulySafe
+author: July_ss
+version: 1.0.0
+main: com.github.julyss2019.bukkit.plugins.julysafe.JulySafe
+api-version: 1.13
+depend:
+  - JulyLibrary
+commands:
+  julysafe:
+    alias:
+      - jsafe

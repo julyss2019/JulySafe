@@ -1,0 +1,111 @@
+# 使用 UTF-8 编码，区分大小写
+
+# 日志
+log:
+  storage:
+    enabled: true # 是否存储日志
+    flush_interval: 60 # 刷新缓存间隔，秒
+# 丢下掉落物记录
+player_drop_record:
+  enabled: true
+# 捡起掉落物记录
+player_pickup_record:
+  enabled: true
+# 实体清理
+clean_entity:
+  enabled: true
+  interval: 300   # 间隔：秒
+  worlds: # 世界，* 代表所有
+    - '*'
+  filter: # 过滤器
+    water_mobs: true # 水生动物
+    named: true # 已命名的怪物
+    npcs: true # 村民，流浪商人
+    animals: true # 动物
+    golems: true # 雪傀儡，铁傀儡，潜影贝
+    # 其他过滤
+    types:
+      - 'ENDER_DRAGON'
+      - 'ZOMBIE_VILLAGER'
+  countdown_second: 60 # 倒计时，秒
+# 清理掉落物
+clean_drop:
+  enabled: true
+  # 世界，* 代表所有
+  worlds:
+    - '*'
+  # 过滤器
+  filter:
+    display_name_items: true # 带名字的物品
+    lore_items: true # 带 lore的物品
+    materials:
+      - DIAMOND
+      - BLACK_SHULKER_BOX
+      - BLUE_SHULKER_BOX
+      - BROWN_SHULKER_BOX
+      - CYAN_SHULKER_BOX
+      - GRAY_SHULKER_BOX
+      - GREEN_SHULKER_BOX
+      - LIGHT_BLUE_SHULKER_BOX
+      - LIGHT_GRAY_SHULKER_BOX
+      - LIME_SHULKER_BOX
+      - MAGENTA_SHULKER_BOX
+      - ORANGE_SHULKER_BOX
+      - PINK_SHULKER_BOX
+      - PURPLE_SHULKER_BOX
+      - RED_SHULKER_BOX
+      - SHULKER_BOX
+      - WHITE_SHULKER_BOX
+      - YELLOW_SHULKER_BOX
+  interval: 300 # 间隔，秒
+  countdown_second: 60 # 倒计时，秒
+# 区块密集实体清理
+anti_entity_farm:
+  enabled: true
+  check_event: true # 同时检查事件，这会导致区块实体数量到达阈值时无法使用生成蛋等方式生成
+  interval: 15   # 检测间隔，秒
+  worlds:
+    # 世界
+    'world':
+      MINECART: 5 # 矿车
+      ZOMBIE: 5 # 僵尸
+      SPIDER: 5
+# QuickShop 偷东西bug修复
+quickshop_bug_fix:
+  enabled: true
+# 怪物生成间隔限制
+entity_spawn_interval_limit:
+  enabled: true
+  types:
+    'PIG_ZOMBIE': 1000 # 毫秒
+# 禁止非法软件
+anti_illegal_player:
+  enabled: false
+  deop_on_quit: true # 下线就取消OP
+  survival_mode_on_quit: true # 下线就设置为生存模式
+  creative_whitelist: # 创造模式白名单
+    - 'July_ss'
+  op_whitelist:   # OP 白名单
+    - 'July_ss'
+# 红石限制
+redstone_limit:
+  enabled: true
+  worlds: # 世界，通配符 *
+    - '*'
+  tps: 20   # 低于 tps 将启用限制
+  duration: 10   # 检测持续时间
+  threshold: 6 # 阈值
+  ban_duration: 30   # 封禁时间，秒
+  notify_interval: 10 # 通知间隔
+# 农作物防踩踏
+anti_trample_crop:
+  enabled: true
+# 聊天限制
+chat_limit:
+  enabled: true
+  interval: 3 # # 两次发言间隔，秒
+  bad_words: # 过滤正则表达式
+    - 'nmsl'
+    - '[草操艹]你[吗妈]'
+  replace_string: '*' # 替换字符串
+  cancelled: false # 是否直接取消发送
