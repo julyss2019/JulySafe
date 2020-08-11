@@ -95,7 +95,7 @@ redstone_limit:
   tps: 20   # 低于 tps 将启用限制
   duration: 10   # 检测持续时间
   threshold: 6 # 阈值
-  ban_duration: 30   # 封禁时间，秒
+  ban_duration: 120   # 封禁时间，秒
   notify_interval: 10 # 通知间隔
 # 农作物防踩踏
 anti_trample_crop:

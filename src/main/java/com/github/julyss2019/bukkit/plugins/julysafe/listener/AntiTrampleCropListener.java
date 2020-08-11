@@ -1,7 +1,6 @@
 package com.github.julyss2019.bukkit.plugins.julysafe.listener;
 
 import com.github.julyss2019.bukkit.plugins.julysafe.JulySafe;
-import com.github.julyss2019.bukkit.plugins.julysafe.config.MainConfig;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.event.EventHandler;

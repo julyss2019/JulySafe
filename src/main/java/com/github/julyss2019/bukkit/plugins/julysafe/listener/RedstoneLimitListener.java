@@ -66,6 +66,7 @@ public class RedstoneLimitListener implements Listener {
         }
 
         public void update() {
+            // 如果超时了，重新计数
             if (System.currentTimeMillis() - getBeginningTime() > plugin.getMainConfig().getRedstoneLimitDuration() * 1000L) {
                 setCount(0);
                 setBeginningTime(System.currentTimeMillis());
@@ -132,7 +133,7 @@ public class RedstoneLimitListener implements Listener {
                 counter.setCount(counter.getCount() + 1);
                 counter.setLastRedstone(System.currentTimeMillis());
 
-                if (counter.getCount() == mainConfig.getRedstoneLimitThreshold()) {
+                if (counter.getCount() > mainConfig.getRedstoneLimitThreshold()) {
                     banChunk(chunk);
                     logger.info("[redstone_limit] [禁用红石] 位置 = " + location + ", 附近玩家 = "
                             + Arrays.stream(chunk.getEntities())
@@ -148,7 +149,6 @@ public class RedstoneLimitListener implements Listener {
         long banExpired = banMap.getOrDefault(chunk, -1L);
 
         if (System.currentTimeMillis() < banExpired) {
-
             event.setNewCurrent(0);
 
             for (Entity entity : chunk.getEntities()) {
@@ -158,12 +158,12 @@ public class RedstoneLimitListener implements Listener {
 
                     if (System.currentTimeMillis() - notifyMap.getOrDefault(uuid, -1L) > mainConfig.getRedstoneLimitNotifyInterval() * 1000L) {
                         langHelper.sendMsg(player
-                                , JulyText.setPlaceholders(lang.getString("redstone_limit.deny"), new PlaceholderContainer()
+                                , lang.getString("deny"), new PlaceholderContainer()
                                         .add("x", String.valueOf(location.getBlockX()))
                                         .add("y", String.valueOf(location.getBlockY()))
                                         .add("z", String.valueOf(location.getBlockZ()))
                                         .add("expired", SDF.format(banExpired))
-                                        .add("threshold", String.valueOf(mainConfig.getRedstoneLimitThreshold()))));
+                                        .add("threshold", String.valueOf(mainConfig.getRedstoneLimitThreshold())));
                         notifyMap.put(uuid, System.currentTimeMillis());
                     }
                 }

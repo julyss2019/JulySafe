@@ -39,6 +39,10 @@ public class JulySafe extends JavaPlugin {
     public void onEnable() {
         instance = this;
 
+        if (!Bukkit.getPluginManager().isPluginEnabled("JulyLibrary")) {
+            throw new RuntimeException("前置插件 JulyLibrary 未加载");
+        }
+
         new Metrics(this, 8485);
         saveResources();
 
@@ -51,8 +55,11 @@ public class JulySafe extends JavaPlugin {
         this.langHelper = new LangHelper();
 
         if (mainConfig.isLogStorageEnabled()) {
+            pluginLogger.setConsoleLevel(Logger.Level.INFO);
             pluginLogger.setStorage(new Logger.Storage(getDataFolder(), "${date}.log", mainConfig.getLogStorageFlushInterval()));
         }
+
+        commandHandler.setCommandFormat("&a[JulySafe] &f/${label} ${arg} - ${desc}");
 
         configLoader.load();
         registerCommands();

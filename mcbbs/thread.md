@@ -1,12 +1,12 @@
-# JulyProtect
+# JulySafe
 
-## 为什么使用 JulyProtect？
+## 为什么使用 JulySafe
 
 * 开源
-* 多版本兼容
+* 多版本支持
+* 多服务端支持
 * 高度自定义
 * 功能齐全
-* 多服务端支持
 * 人性化的交互方式
 
 ## 功能列表
@@ -93,11 +93,13 @@ clean_drop: # 清理掉落物
 
 ![redstone_limit.gif](https://i.loli.net/2020/08/10/ZLJWiGOm6jxrzSF.gif)
 
+![Snipaste_2020-08-11_17-32-25.png](https://i.loli.net/2020/08/11/4OaCPIV3QtTvi5N.png)
+
 #### 非法玩家检测
 
-该功能能在**一定程度上**防止后门插件非法获取OP或创造模式。
+该功能能在**一定程度上**防止通过 Bug 或 后门插件非法获取 OP 或创造模式。
 
-一旦不在配置文件白名单的玩家获取了OP或创造模式就会自动封禁。
+一旦不在配置文件白名单的玩家获取了 OP 或创造模式就会自动封禁。
 
 **该功能需要手动开启。**
 
@@ -115,33 +117,21 @@ clean_drop: # 清理掉落物
 
 ## 指令与权限
 
-### 插件相关（JulyProtect.admin）
+### 插件相关（JulySafe.admin）
 
-#### /jp plugin reload
+#### /jsafe plugin reload
 重载插件。
 
 ### 帮助者相关
 
-#### /jp helper tps
+#### /jsafe helper tps
 查看服务器 tps。
 
-#### /jp helper entities
+#### /jsafe helper entities
 查看服务器实体情况。
 
-![helper_entities.png](https://i.loli.net/2020/08/10/LFdyqEUuzZNS3vc.png)
-
-/jp helper setAllEntitiesAI <true/false>
-
-开关所有生物 AI。
-
-#### /jp helper setRedstone <true/false>
-开关红石。
-
-#### /jp helper tempSetEntityAI <true/false>
-
-临时禁止某个生物的 AI，关服自动解除。
+![Snipaste_2020-08-11_17-33-44.png](https://i.loli.net/2020/08/11/T9qmOAPZvHSRV7N.png)
 
 ##  下载
 
-https://afdian.net/@july_ss
-
+https://gitee.com/julyss2020/JulySafe-mcbbs/blob/master/README.md

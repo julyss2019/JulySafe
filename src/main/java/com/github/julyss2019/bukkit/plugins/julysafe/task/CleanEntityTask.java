@@ -38,9 +38,9 @@ public class CleanEntityTask extends BukkitRunnable {
                     bossBar.addPlayer(o);
                 }
             });
-            bossBar.setTitle(JulyText.setPlaceholders(langHelper.handleText(lang.getString("countdown_boss_bar")),
+            bossBar.setTitle(JulyText.getColoredText(langHelper.handleText(lang.getString("countdown_boss_bar"),
                     new PlaceholderContainer()
-                            .add("<seconds>", String.valueOf(countdown))));
+                            .add("seconds", String.valueOf(countdown)))));
             bossBar.setProgress((double) (mainConfig.getCleanEntityInterval() - counter) / mainConfig.getCleanEntityCountdownSecond());
         }
 

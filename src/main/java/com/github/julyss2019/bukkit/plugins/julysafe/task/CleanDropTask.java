@@ -43,8 +43,8 @@ public class CleanDropTask extends BukkitRunnable {
                     bossBar.addPlayer(o);
                 }
             });
-            bossBar.setTitle(JulyText.getColoredText(JulyText.setPlaceholders(langHelper.handleText(lang.getString("countdown_boss_bar")), new PlaceholderContainer()
-                    .add("<seconds>", String.valueOf(countdown)))));
+            bossBar.setTitle(JulyText.getColoredText(langHelper.handleText(lang.getString("countdown_boss_bar"), new PlaceholderContainer()
+                    .add("seconds", String.valueOf(countdown)))));
             bossBar.setProgress((double) (mainConfig.getCleanDropInterval() - counter) / mainConfig.getCleanDropCountdownSecond());
         }
 
@@ -74,7 +74,7 @@ public class CleanDropTask extends BukkitRunnable {
             }
 
             bossBar.removeAll();
-            JulyMessage.broadcastColoredMessage(JulyText.setPlaceholders(langHelper.handleText(lang.getString("finished")), new PlaceholderContainer()
+            JulyMessage.broadcastColoredMessage(langHelper.handleText(lang.getString("finished"), new PlaceholderContainer()
                     .add("count", String.valueOf(total))));
             counter = 0;
         }
