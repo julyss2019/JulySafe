@@ -1,12 +1,12 @@
 # 构建
 
-1. install Maven-Coper 到本地仓库
+1. install Maven-Copyer 到本地仓库
 
    https://github.com/julyss2019/Maven-Copyer
 
 2. install JulyLibrary 到本地仓库
 
-   https://github.com/julyss2019/JulyLibary
+   https://github.com/julyss2019/JulyLibrary
 
 3. 修改 pom.xml
 
