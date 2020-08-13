@@ -132,6 +132,12 @@ clean_drop: # 清理掉落物
 
 ![Snipaste_2020-08-11_17-33-44.png](https://i.loli.net/2020/08/11/T9qmOAPZvHSRV7N.png)
 
+## 开源
+
+可自行构建。
+
+https://github.com/julyss2019/JulySafe
+
 ##  下载
 
-https://gitee.com/julyss2020/JulySafe-mcbbs/blob/master/README.md
+https://afdian.net/@july_ss
