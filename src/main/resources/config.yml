@@ -77,7 +77,7 @@ quickshop_bug_fix:
 entity_spawn_interval_limit:
   enabled: true
   types:
-    'PIG_ZOMBIE': 1000 # 毫秒
+    'ZOMBIE': 1000 # 毫秒
 # 禁止非法软件
 anti_illegal_player:
   enabled: false
