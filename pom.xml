@@ -6,7 +6,7 @@
 
     <groupId>com.github.julyss2019.bukkit.plugins</groupId>
     <artifactId>JulySafe</artifactId>
-    <version>1.0.1</version>
+    <version>1.0.2</version>
 
     <repositories>
         <repository>
