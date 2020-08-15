@@ -122,7 +122,7 @@ clean_drop: # 清理掉落物
 #### /jsafe plugin reload
 重载插件。
 
-### 帮助者相关
+### 帮助者相关（JulySafe.admin）
 
 #### /jsafe helper tps
 查看服务器 tps。
@@ -132,12 +132,16 @@ clean_drop: # 清理掉落物
 
 ![Snipaste_2020-08-11_17-33-44.png](https://i.loli.net/2020/08/11/T9qmOAPZvHSRV7N.png)
 
-## 开源
+## 配置文件
 
-可自行构建。
+![](https://i.loli.net/2020/08/15/nbfXMzeaCHsgvNq.png)
+
+## 开源
 
 https://github.com/julyss2019/JulySafe
 
 ##  下载
 
 https://afdian.net/@july_ss
+
+> 本插件所用所有代码均为原创,不存在借用/抄袭等行为
