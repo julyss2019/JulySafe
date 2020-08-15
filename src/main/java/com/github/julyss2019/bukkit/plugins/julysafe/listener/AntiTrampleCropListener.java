@@ -14,7 +14,7 @@ public class AntiTrampleCropListener implements Listener {
     public void onPlayerInteractEvent(PlayerInteractEvent event) {
         Block block = event.getClickedBlock();
 
-        if (block != null && block.getType() == Material.FARMLAND) {
+        if (event.getHand() == null && block != null && block.getType() == Material.FARMLAND) {
             event.setCancelled(true);
         }
     }
