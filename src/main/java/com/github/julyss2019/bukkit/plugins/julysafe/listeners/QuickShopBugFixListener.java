@@ -1,4 +1,4 @@
-package com.github.julyss2019.bukkit.plugins.julysafe.listener;
+package com.github.julyss2019.bukkit.plugins.julysafe.listeners;
 
 import com.github.julyss2019.bukkit.plugins.julysafe.JulySafe;
 import com.github.julyss2019.bukkit.plugins.julysafe.config.MainConfig;
@@ -38,7 +38,7 @@ public class QuickShopBugFixListener implements Listener {
             langHelper.sendMsg(player, lang.getString("deny"));
             event.setCancelled(true);
             event.setBuild(false);
-            logger.debug("[quickshop_bug_fix] [禁用Bug] ID = " + player.getName() + "(" + player.getUniqueId() + "), 位置 = " + player.getLocation() + ".");
+            logger.debug("[quickshop_bug_fix] [deny] ID = " + player.getName() + "(" + player.getUniqueId() + "), 位置 = " + player.getLocation() + ".");
         }
     }
 }

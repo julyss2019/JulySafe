@@ -1,57 +1,61 @@
 package com.github.julyss2019.bukkit.plugins.julysafe.config;
 
 import com.github.julyss2019.bukkit.plugins.julysafe.JulySafe;
+import com.github.julyss2019.bukkit.plugins.julysafe.target.matcher.drop.DropMatcher;
+import com.github.julyss2019.bukkit.plugins.julysafe.target.matcher.entity.EntityMatcher;
+import com.github.julyss2019.mcsp.julylibrary.utilv2.ValidateUtil;
 import org.bukkit.World;
-import org.bukkit.entity.EntityType;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.Item;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.HashMap;
-import java.util.Optional;
+import java.util.Collection;
+import java.util.HashSet;
 
 public class MainConfigHelper {
     private final MainConfig mainConfig = JulySafe.getInstance().getMainConfig();
 
-    public boolean isRedstoneLimitWorld(@NotNull World world) {
-        return mainConfig.getRedstoneLimitWorlds().contains("*") || mainConfig.getRedstoneLimitWorlds().contains(world.getName());
+    public AntiEntityFarmLimit matchAntiEntityFarmLimit(@NotNull Entity entity) {
+        for (AntiEntityFarmLimit limit : mainConfig.getAntiEntityFarmLimits()) {
+            if (limit.getTarget().isTarget(entity)) {
+                return limit;
+            }
+        }
+
+        return null;
     }
 
-    public boolean isAntiMobFarmWorld(@NotNull World world) {
-        return mainConfig.getAntiEntityFarmWorldMap().containsKey("*") || mainConfig.getAntiEntityFarmWorldMap().containsKey(world.getName());
+    public boolean isAntiEntityFarmWorld(@NotNull World world) {
+        return isTargetWorld(world, mainConfig.getAntiEntityFarmWorlds());
+    }
+
+    public boolean isRedstoneLimitWorld(@NotNull World world) {
+        return isTargetWorld(world, mainConfig.getRedstoneLimitWorlds());
     }
 
     public boolean isCleanDropWorld(@NotNull World world) {
-        return mainConfig.getCleanDropWorlds().contains("*") || mainConfig.getCleanDropWorlds().contains(world.getName());
+        return isTargetWorld(world, mainConfig.getCleanDropWorlds());
     }
 
     public boolean isCleanEntityWorld(@NotNull World world) {
-        return mainConfig.getCleanEntityWorlds().contains("*") || mainConfig.getCleanEntityWorlds().contains(world.getName());
+        return isTargetWorld(world, mainConfig.getCleanEntityWorlds());
     }
 
     /**
-     * 得到反动物农场数量限制
-     * @param entityType
+     * 是否为目标世界
+     * @param world 世界
+     * @param regexWorlds 正则世界名
      * @return
      */
-    public int getAntiMobFarmMobLimit(@NotNull World world, @NotNull EntityType entityType) {
-        String worldName = world.getName();
+    private boolean isTargetWorld(@NotNull World world, @NotNull Collection<String> regexWorlds) {
+        ValidateUtil.notNullElement(regexWorlds);
 
-        if (!isAntiMobFarmWorld(world)) {
-            return -1;
+        for (String regex : regexWorlds) {
+            if (world.getName().matches(regex)) {
+                return true;
+            }
         }
 
-        if (mainConfig.getAntiEntityFarmWorldMap().containsKey(worldName)) {
-            return mainConfig.getAntiEntityFarmWorldMap().get(worldName).getOrDefault(entityType, Optional.ofNullable(mainConfig.getAntiEntityFarmWorldMap().get("*")).orElse(new HashMap<>()).getOrDefault(entityType, -1));
-        }
-
-        return -1;
-    }
-
-    /**
-     * 得到生物生成间隔限制
-     * @param entityType
-     * @return 毫秒
-     */
-    public long getEntitySpawnIntervalLimit(@NotNull EntityType entityType) {
-        return mainConfig.getEntitySpawnIntervalLimitMap().getOrDefault(entityType, -1L);
+        return false;
     }
 }

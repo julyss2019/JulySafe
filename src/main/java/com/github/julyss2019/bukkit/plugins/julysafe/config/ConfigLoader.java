@@ -1,103 +1,138 @@
 package com.github.julyss2019.bukkit.plugins.julysafe.config;
 
 import com.github.julyss2019.bukkit.plugins.julysafe.JulySafe;
+import com.github.julyss2019.bukkit.plugins.julysafe.config.lang.Lang;
+import com.github.julyss2019.bukkit.plugins.julysafe.target.DropTarget;
+import com.github.julyss2019.bukkit.plugins.julysafe.target.EntityTarget;
+import com.github.julyss2019.bukkit.plugins.julysafe.target.matcher.drop.DropMatcher;
+import com.github.julyss2019.bukkit.plugins.julysafe.target.matcher.entity.EntityMatcher;
 import com.github.julyss2019.mcsp.julylibrary.config.JulyConfig;
-import org.bukkit.Material;
+import com.github.julyss2019.mcsp.julylibrary.logger.Logger;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
-import org.bukkit.entity.EntityType;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.stream.Collectors;
+import java.util.*;
 
 public class ConfigLoader {
-    private JulySafe plugin = JulySafe.getInstance();
-    private MainConfig mainConfig;
-
-    public ConfigLoader(@NotNull MainConfig mainConfig) {
-        this.mainConfig = mainConfig;
-    }
+    private final JulySafe plug = JulySafe.getInstance();
+    private final MainConfig mainConfig = plug.getMainConfig();
+    private final Logger logger = plug.getPluginLogger();
 
     public void load() {
-        plugin.reloadConfig();
+        plug.reloadConfig();
 
-        FileConfiguration config = YamlConfiguration.loadConfiguration(new File(plugin.getDataFolder(), "config" + File.separator + "config.yml"));
+        FileConfiguration config = YamlConfiguration.loadConfiguration(new File(plug.getDataFolder(), "config" + File.separator + "config.yml"));
 
-        JulyConfig.loadConfig(config, mainConfig);
-
-        Map<EntityType, Long> entitySpawnLimitMap = new HashMap<>();
-
-        for (String strEntityType : config.getConfigurationSection("entity_spawn_interval_limit.types").getKeys(false)) {
-            EntityType entityType;
-
-            try {
-                entityType = EntityType.valueOf(strEntityType);
-            } catch (Exception e) {
-                throw new RuntimeException("entity_spawn_interval——limit.types." + strEntityType + " 类型异常", e);
-            }
-
-            entitySpawnLimitMap.put(entityType, config.getLong("entity_spawn_interval_limit.types." + strEntityType));
+        try {
+            JulyConfig.loadConfig(config, mainConfig);
+        } catch (Exception e) {
+            throw new RuntimeException("载入 config.yml 失败", e);
         }
 
-        mainConfig.setEntitySpawnIntervalLimitMap(entitySpawnLimitMap);
+        updateLogger(); // 首先设置 Logger
+        plug.setLang(new Lang(YamlConfiguration.loadConfiguration(new File(plug.getDataFolder(), "config" + File.separator + "lang.yml"))));
+        setCleanEntityTarget();
+        setCleanDropTarget();
+        setAntiEntityFarmLimits();
+        setAutoRestartTimesSeconds();
+    }
 
-        Map<String, Map<EntityType, Integer>> antiMobFarmWorldMap = new HashMap<>();
+    public void updateLogger() {
+        if (mainConfig.isLogStorageEnabled()) {
+            logger.setStorageLevel(Logger.Level.DEBUG);
+            logger.setStorage(new Logger.Storage(new File(plug.getDataFolder(), "logs"), "${date}.log", mainConfig.getLogStorageFlushInterval()));
+        }
+    }
 
-        for (String worldName : config.getConfigurationSection("anti_entity_farm.worlds").getKeys(false)) {
-            ConfigurationSection worldSection = config.getConfigurationSection("anti_entity_farm.worlds." + worldName);
-            Map<EntityType, Integer> mobAmountMap = new HashMap<>();
+    public void setAutoRestartTimesSeconds() {
+        FileConfiguration config = YamlConfiguration.loadConfiguration(new File(plug.getDataFolder(), "config" + File.separator + "config.yml"));
+        Set<Integer> results = new HashSet<>();
 
-            for (String entityTypeStr : worldSection.getKeys(false)) {
-                EntityType entityType;
+        for (String expression : config.getStringList("auto_restart.times")) {
+            String[] array = expression.split(":");
 
-                try {
-                    entityType = EntityType.valueOf(entityTypeStr);
-                } catch (Exception e) {
-                    throw new RuntimeException(worldSection.getCurrentPath() + entityTypeStr + " 类型异常", e);
-                }
-
-                if (entityType == EntityType.PLAYER) {
-                    throw new RuntimeException(worldSection.getCurrentPath() + entityTypeStr + " 不能使用 PLAYER 类型");
-                }
-
-                int count = worldSection.getInt(entityTypeStr);
-
-                if (count < 0) {
-                    throw new RuntimeException(worldSection.getCurrentPath() + entityTypeStr + " 必须 >= 0");
-                }
-
-                mobAmountMap.put(entityType, count);
+            if (array.length != 3) {
+                throw new RuntimeException("时间格式不合法: " +expression);
             }
 
-            antiMobFarmWorldMap.put(worldName, mobAmountMap);
+            int hours;
+            int minutes;
+            int seconds;
+
+            try {
+                hours = Integer.parseInt(array[0]);
+                minutes = Integer.parseInt(array[1]);
+                seconds = Integer.parseInt(array[2]);
+            }  catch (Exception e) {
+                throw new RuntimeException("时间格式不合法: " +expression);
+            }
+
+            results.add(hours * 60 * 60 + minutes * 60 + seconds);
         }
 
-        mainConfig.setCleanDropFilterMaterials(config.getStringList("clean_drop.filter.materials").stream().map(s -> {
-            Material material;
+        mainConfig.setAutoRestartTimesSeconds(results);
+    }
 
-            try {
-                material = Material.valueOf(s);
-            } catch (Exception e) {
-                throw new RuntimeException("clean_drop.filter.materials." + s + " 不合法");
-            }
+    private void setAntiEntityFarmLimits() {
+        FileConfiguration config = YamlConfiguration.loadConfiguration(new File(plug.getDataFolder(), "config" + File.separator + "config.yml"));
+        ConfigurationSection limitsSection = config.getConfigurationSection("anti_entity_farm.limits");
+        Set<AntiEntityFarmLimit> results = new HashSet<>();
 
-            return material;
-        }).collect(Collectors.toSet()));
-        mainConfig.setCleanEntityFilterTypes(config.getStringList("clean_entity.filter.types").stream().map(s -> {
-            EntityType entityType;
+        for (String limitName : limitsSection.getKeys(false)) {
+            ConfigurationSection limitSection = limitsSection.getConfigurationSection(limitName);
 
-            try {
-                entityType = EntityType.valueOf(s);
-            } catch (Exception e) {
-                throw new RuntimeException("clean_entity.filter.types." + s + " 不合法");
-            }
+            results.add(new AntiEntityFarmLimit(getEntityTarget(limitSection.getConfigurationSection("target")), limitSection.getInt("threshold")));
+        }
 
-            return entityType;
-        }).collect(Collectors.toSet()));
-        mainConfig.setAntiEntityFarmWorldMap(antiMobFarmWorldMap);
+        mainConfig.setAntiEntityFarmLimits(results);
+    }
+
+    /**
+     * 获取 EntityTarget
+     * @param section 节点
+     * @return
+     */
+    private EntityTarget getEntityTarget(@NotNull ConfigurationSection section) {
+        Set<EntityMatcher> includes = new HashSet<>();
+        Set<EntityMatcher> excludes = new HashSet<>();
+        ConfigurationSection includeSection = section.getConfigurationSection("includes");
+        ConfigurationSection excludeSection = section.getConfigurationSection("excludes");
+
+        for (String name : includeSection.getKeys(false)) {
+            includes.add(EntityMatcherParser.parse(includeSection.getConfigurationSection(name)));
+        }
+
+        for (String name : excludeSection.getKeys(false)) {
+            excludes.add(EntityMatcherParser.parse(excludeSection.getConfigurationSection(name)));
+        }
+
+        return new EntityTarget(includes, excludes);
+    }
+
+    private void setCleanEntityTarget() {
+        FileConfiguration config = YamlConfiguration.loadConfiguration(new File(plug.getDataFolder(), "config" + File.separator + "config.yml"));
+
+        mainConfig.setCleanEntityTarget(getEntityTarget(config.getConfigurationSection("clean_entity.target")));
+    }
+
+    private void setCleanDropTarget() {
+        Set<DropMatcher> includes = new HashSet<>();
+        Set<DropMatcher> excludes = new HashSet<>();
+        FileConfiguration config = YamlConfiguration.loadConfiguration(new File(plug.getDataFolder(), "config" + File.separator + "config.yml"));
+        ConfigurationSection includeSection = config.getConfigurationSection("clean_drop.target.includes");
+        ConfigurationSection excludeSection = config.getConfigurationSection("clean_drop.target.excludes");
+
+        for (String name : includeSection.getKeys(false)) {
+            includes.add(DropMatcherParser.parse(includeSection.getConfigurationSection(name)));
+        }
+
+        for (String name : excludeSection.getKeys(false)) {
+            excludes.add(DropMatcherParser.parse(excludeSection.getConfigurationSection(name)));
+        }
+
+        mainConfig.setCleanDropTarget(new DropTarget(includes, excludes));
     }
 }

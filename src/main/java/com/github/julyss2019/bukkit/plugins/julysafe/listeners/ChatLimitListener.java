@@ -1,10 +1,9 @@
-package com.github.julyss2019.bukkit.plugins.julysafe.listener;
+package com.github.julyss2019.bukkit.plugins.julysafe.listeners;
 
 import com.github.julyss2019.bukkit.plugins.julysafe.JulySafe;
 import com.github.julyss2019.bukkit.plugins.julysafe.config.MainConfig;
 import com.github.julyss2019.bukkit.plugins.julysafe.config.lang.Lang;
 import com.github.julyss2019.bukkit.plugins.julysafe.config.lang.LangHelper;
-import com.github.julyss2019.mcsp.julylibrary.text.JulyText;
 import com.github.julyss2019.mcsp.julylibrary.text.PlaceholderContainer;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -44,7 +43,7 @@ public class ChatLimitListener implements Listener {
             if (matcher.find()) {
                 if (mainConfig.isChatLimitCancelled()) {
                     event.setCancelled(true);
-                    langHelper.sendMsg(player, lang.getString("badword_deny"));
+                    langHelper.sendMsg(player, lang.getString("badwords_deny"));
                 } else {
                     String finalMsg = msg;
 

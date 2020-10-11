@@ -1,4 +1,4 @@
-package com.github.julyss2019.bukkit.plugins.julysafe.listener;
+package com.github.julyss2019.bukkit.plugins.julysafe.listeners;
 
 import com.github.julyss2019.bukkit.plugins.julysafe.JulySafe;
 import com.github.julyss2019.bukkit.plugins.julysafe.config.MainConfig;

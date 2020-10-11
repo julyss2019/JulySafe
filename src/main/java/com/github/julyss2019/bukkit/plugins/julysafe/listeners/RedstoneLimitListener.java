@@ -1,4 +1,4 @@
-package com.github.julyss2019.bukkit.plugins.julysafe.listener;
+package com.github.julyss2019.bukkit.plugins.julysafe.listeners;
 
 import com.github.julyss2019.bukkit.plugins.julysafe.JulySafe;
 import com.github.julyss2019.bukkit.plugins.julysafe.config.MainConfig;
@@ -6,7 +6,6 @@ import com.github.julyss2019.bukkit.plugins.julysafe.config.MainConfigHelper;
 import com.github.julyss2019.bukkit.plugins.julysafe.config.lang.Lang;
 import com.github.julyss2019.bukkit.plugins.julysafe.config.lang.LangHelper;
 import com.github.julyss2019.mcsp.julylibrary.logger.Logger;
-import com.github.julyss2019.mcsp.julylibrary.text.JulyText;
 import com.github.julyss2019.mcsp.julylibrary.text.PlaceholderContainer;
 import org.bukkit.Chunk;
 import org.bukkit.Location;

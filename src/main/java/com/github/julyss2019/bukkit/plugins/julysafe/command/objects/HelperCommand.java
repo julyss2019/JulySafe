@@ -1,4 +1,4 @@
-package com.github.julyss2019.bukkit.plugins.julysafe.command;
+package com.github.julyss2019.bukkit.plugins.julysafe.command.objects;
 
 import com.github.julyss2019.bukkit.plugins.julysafe.JulySafe;
 import com.github.julyss2019.bukkit.plugins.julysafe.config.lang.LangHelper;
@@ -24,7 +24,7 @@ public class HelperCommand implements JulyCommand {
     private final LangHelper langHelper = plugin.getLangHelper();
     private final DecimalFormat decimalFormat = new DecimalFormat("0.00");
 
-    @SubCommand(firstArg = "findEntities", description = "查找实体", length = 3, subArgs = {"<世界>", "<类型>", "<条数(-1)>"}, permission = Util.ADMIN_PER, senders = {SenderType.PLAYER, SenderType.CONSOLE})
+    @SubCommand(firstArg = "helper", description = "${finder.helper}", length = 3, subArgs = {"<世界>", "<类型>", "<条数(-1)>"}, permission = Util.ADMIN_PER, senders = {SenderType.PLAYER, SenderType.CONSOLE})
     public void findEntities(CommandSender sender, String[] args) {
         String argWorld = args[0];
         String argType = args[1];

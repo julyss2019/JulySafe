@@ -1,32 +1,33 @@
 package com.github.julyss2019.bukkit.plugins.julysafe;
 
+import com.github.julyss2019.bukkit.plugins.julysafe.bossbar.GlobalBossBarManager;
 import com.github.julyss2019.bukkit.plugins.julysafe.command.CustomCommandHandler;
-import com.github.julyss2019.bukkit.plugins.julysafe.command.HelperCommand;
-import com.github.julyss2019.bukkit.plugins.julysafe.command.PluginCommand;
+import com.github.julyss2019.bukkit.plugins.julysafe.command.objects.HelperCommand;
+import com.github.julyss2019.bukkit.plugins.julysafe.command.objects.PluginCommand;
 import com.github.julyss2019.bukkit.plugins.julysafe.config.ConfigLoader;
 import com.github.julyss2019.bukkit.plugins.julysafe.config.MainConfig;
 import com.github.julyss2019.bukkit.plugins.julysafe.config.MainConfigHelper;
 import com.github.julyss2019.bukkit.plugins.julysafe.config.lang.Lang;
 import com.github.julyss2019.bukkit.plugins.julysafe.config.lang.LangHelper;
-import com.github.julyss2019.bukkit.plugins.julysafe.listener.*;
-import com.github.julyss2019.bukkit.plugins.julysafe.task.*;
+import com.github.julyss2019.bukkit.plugins.julysafe.listeners.*;
+import com.github.julyss2019.bukkit.plugins.julysafe.tasks.*;
 import com.github.julyss2019.mcsp.julylibrary.JulyLibraryAPI;
 import com.github.julyss2019.mcsp.julylibrary.logger.Logger;
-import com.github.julyss2019.mcsp.julylibrary.utils.FileUtil;
-import com.github.julyss2019.mcsp.julylibrary.utils.PluginUtil;
+import com.github.julyss2019.mcsp.julylibrary.utilv2.PluginUtil;
 import org.bukkit.Bukkit;
-import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.event.HandlerList;
+import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 
 public class JulySafe extends JavaPlugin {
     private static JulySafe instance;
-    public static final String VERSION = "1.0.0";
     private TpsTask tpsTask;
     private CleanDropTask cleanDropTask;
     private CleanEntityTask cleanEntityTask;
+    private AutoRestartTask autoRestartTask;
     private CustomCommandHandler commandHandler;
     private MainConfig mainConfig;
     private MainConfigHelper mainConfigHelper;
@@ -34,41 +35,45 @@ public class JulySafe extends JavaPlugin {
     private Logger pluginLogger;
     private Lang lang;
     private LangHelper langHelper;
+    private GlobalBossBarManager globalBossBarManager;
 
     @Override
     public void onEnable() {
-        instance = this;
-
         if (!Bukkit.getPluginManager().isPluginEnabled("JulyLibrary")) {
             throw new RuntimeException("前置插件 JulyLibrary 未加载");
         }
 
-        new Metrics(this, 8485);
         saveResources();
 
-        this.commandHandler = new CustomCommandHandler();
-        this.mainConfig = new MainConfig();
-        this.mainConfigHelper = new MainConfigHelper();
-        this.configLoader = new ConfigLoader(mainConfig);
+        instance = this;
         this.pluginLogger = JulyLibraryAPI.getLoggerManager().createLogger(this);
-        this.lang = new Lang(YamlConfiguration.loadConfiguration(new File(getDataFolder(), "config" + File.separator + "lang.yml")));
-        this.langHelper = new LangHelper();
-
-        if (mainConfig.isLogStorageEnabled()) {
-            pluginLogger.setConsoleLevel(Logger.Level.INFO);
-            pluginLogger.setStorage(new Logger.Storage(getDataFolder(), "${date}.log", mainConfig.getLogStorageFlushInterval()));
-        }
-
-        commandHandler.setCommandFormat("&a[JulySafe] &f/${label} ${arg} - ${desc}");
+        this.mainConfig = new MainConfig();
+        this.configLoader = new ConfigLoader();
 
         configLoader.load();
+
+        this.commandHandler = new CustomCommandHandler();
+        this.mainConfigHelper = new MainConfigHelper();
+        this.langHelper = new LangHelper();
+        this.globalBossBarManager = new GlobalBossBarManager();
+
+        commandHandler.setCommandFormat("&a[JulySafe] &f/${label} ${arg} - ${desc}");
         registerCommands();
         getCommand("julysafe").setExecutor(commandHandler);
         registerListeners();
         runTasks();
-        pluginLogger.info("&f插件版本: v" + VERSION + ".");
+        new Metrics(this, 8485);
+        pluginLogger.info("&f插件版本: v" + getDescription().getVersion() + ".");
         pluginLogger.info("&f插件交流群: 1148417878.");
         pluginLogger.info("&f插件初始化完毕.");
+    }
+
+    public GlobalBossBarManager getGlobalBossBarManager() {
+        return globalBossBarManager;
+    }
+
+    public void setLang(@NotNull Lang lang) {
+        this.lang = lang;
     }
 
     private void saveResources() {
@@ -121,12 +126,9 @@ public class JulySafe extends JavaPlugin {
     }
 
     public void reloadPlugin() {
-        cleanEntityTask.onDisabled();
-        cleanDropTask.onDisabled();
+        configLoader.load();
         HandlerList.unregisterAll(this);
         Bukkit.getScheduler().cancelTasks(this);
-        configLoader.load();
-
         runTasks();
         registerListeners();
     }
@@ -149,35 +151,43 @@ public class JulySafe extends JavaPlugin {
         if (mainConfig.isAntiIllegalPlayerEnabled()) {
             new AntiIllegalPlayerTask().runTaskTimer(this, 0L, 20L);
         }
+
+        if (mainConfig.isAutoRestartEnabled()) {
+            (this.autoRestartTask = new AutoRestartTask()).runTaskTimer(this, 0L, 20L);
+        }
     }
 
     private void registerListeners() {
+        PluginManager pluginManager = Bukkit.getPluginManager();
+
         if (mainConfig.isQucikshopBugFixEnabled()) {
-            Bukkit.getPluginManager().registerEvents(new QuickShopBugFixListener(), this);
+            pluginManager.registerEvents(new QuickShopBugFixListener(), this);
         }
 
         if (mainConfig.isAntiEntityFarmEnabled()) {
-            Bukkit.getPluginManager().registerEvents(new AntiEntityFarmListener(), this);
+            pluginManager.registerEvents(new AntiEntityFarmListener(), this);
         }
 
         if (mainConfig.isEntitySpawnIntervalLimitEnabled()) {
-            Bukkit.getPluginManager().registerEvents(new EntitySpawnIntervalLimitListener(), this);
+            pluginManager.registerEvents(new EntitySpawnIntervalLimitListener(), this);
         }
 
         if (mainConfig.isPlayerDropRecordEnabled()) {
-            Bukkit.getPluginManager().registerEvents(new PlayerDropRecordListener(), this);
+            pluginManager.registerEvents(new PlayerDropRecordListener(), this);
         }
 
         if (mainConfig.isRedstoneLimitEnabled()) {
-            Bukkit.getPluginManager().registerEvents(new RedstoneLimitListener(), this);
+            pluginManager.registerEvents(new RedstoneLimitListener(), this);
         }
 
         if (mainConfig.isChatLimitEnabled()) {
-            Bukkit.getPluginManager().registerEvents(new ChatLimitListener(), this);
+            pluginManager.registerEvents(new ChatLimitListener(), this);
         }
 
         if (mainConfig.isAntiTrampleCropEnabled()) {
-            Bukkit.getPluginManager().registerEvents(new AntiTrampleCropListener(), this);
+            pluginManager.registerEvents(new AntiTrampleCropListener(), this);
         }
+
+        pluginManager.registerEvents(new GlobalBossBarListener(), this);
     }
 }

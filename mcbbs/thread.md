@@ -145,3 +145,7 @@ https://github.com/julyss2019/JulySafe
 https://afdian.net/@july_ss
 
 > 本插件所用所有代码均为原创,不存在借用/抄袭等行为
+>
+> 购买后免费安装，免费配置，售后群：1148417878。
+>
+> 允许在遵守 GPL 协议的情况下二次开发。

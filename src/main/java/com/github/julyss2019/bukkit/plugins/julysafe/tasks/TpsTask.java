@@ -1,4 +1,4 @@
-package com.github.julyss2019.bukkit.plugins.julysafe.task;
+package com.github.julyss2019.bukkit.plugins.julysafe.tasks;
 
 import org.bukkit.scheduler.BukkitRunnable;
 

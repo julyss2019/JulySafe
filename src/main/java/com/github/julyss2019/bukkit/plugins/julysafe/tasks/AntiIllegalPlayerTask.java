@@ -1,4 +1,4 @@
-package com.github.julyss2019.bukkit.plugins.julysafe.task;
+package com.github.julyss2019.bukkit.plugins.julysafe.tasks;
 
 import com.github.julyss2019.bukkit.plugins.julysafe.JulySafe;
 import com.github.julyss2019.bukkit.plugins.julysafe.config.MainConfig;

@@ -4,7 +4,7 @@ import org.bukkit.configuration.ConfigurationSection;
 import org.jetbrains.annotations.NotNull;
 
 public class Lang {
-    private ConfigurationSection currentSection;
+    private final ConfigurationSection currentSection;
 
     public Lang(@NotNull ConfigurationSection currentSection) {
         this.currentSection = currentSection;

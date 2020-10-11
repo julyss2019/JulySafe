@@ -1,111 +1,168 @@
 # 使用 UTF-8 编码，区分大小写
-
+version: ${version}
 # 日志
 log:
+  # 日志存储
   storage:
-    enabled: true # 是否存储日志
+    enabled: true # 是否开启
     flush_interval: 60 # 刷新缓存间隔，秒
 # 丢下掉落物记录
 player_drop_record:
-  enabled: true
+  enabled: true # 是否开启
 # 捡起掉落物记录
 player_pickup_record:
-  enabled: true
+  enabled: true # 是否开启
 # 实体清理
 clean_entity:
-  enabled: true
-  interval: 300   # 间隔：秒
-  worlds: # 世界，* 代表所有
-    - '*'
-  filter: # 过滤器
-    water_mobs: true # 水生动物
-    named: true # 已命名的怪物
-    npcs: true # 村民，流浪商人
-    animals: true # 动物
-    golems: true # 雪傀儡，铁傀儡，潜影贝
-    # 其他过滤
-    types:
-      - 'ENDER_DRAGON'
-      - 'ZOMBIE_VILLAGER'
-  countdown_second: 60 # 倒计时，秒
+  bossbar:
+    color: YELLOW
+    style: SOLID
+  enabled: true # 是否开启
+  interval: 300 # 间隔：秒
+  worlds: # 世界正则表达式
+    - '.*'
+  target:
+    includes: # 包含
+      '1':
+        type: CLASS
+        classes:
+          - 'Monster'
+    excludes: # 除外（优先级高）
+      '1':
+        type: METADATA
+        names:
+          - 'MyPet'
+          - 'NPC'
+      '2':
+        type: NAME
+        regexes:
+          - '.*'
+      '3':
+        type: ENUM
+        regexes:
+          - 'ENDER_DRAGON'
+          - 'ZOMBIE_VILLAGER'
+  countdown_seconds: 60 # 倒计时，秒
 # 清理掉落物
 clean_drop:
-  enabled: true
-  # 世界，* 代表所有
-  worlds:
-    - '*'
-  # 过滤器
-  filter:
-    display_name_items: true # 带名字的物品
-    lore_items: true # 带 lore的物品
-    materials:
-      - DIAMOND
-      - BLACK_SHULKER_BOX
-      - BLUE_SHULKER_BOX
-      - BROWN_SHULKER_BOX
-      - CYAN_SHULKER_BOX
-      - GRAY_SHULKER_BOX
-      - GREEN_SHULKER_BOX
-      - LIGHT_BLUE_SHULKER_BOX
-      - LIGHT_GRAY_SHULKER_BOX
-      - LIME_SHULKER_BOX
-      - MAGENTA_SHULKER_BOX
-      - ORANGE_SHULKER_BOX
-      - PINK_SHULKER_BOX
-      - PURPLE_SHULKER_BOX
-      - RED_SHULKER_BOX
-      - SHULKER_BOX
-      - WHITE_SHULKER_BOX
-      - YELLOW_SHULKER_BOX
+  bossbar:
+    color: YELLOW
+    style: SOLID
+  enabled: true # 是否开启
+  worlds: # 世界正则表达式
+    - '.*'
+  target:
+    includes: # 包含
+      '1':
+        type: ENUM
+        regexes:
+          - '.*'
+    excludes: # 除外（优先级高）
+      '1':
+        type: ENCHANTMENT
+        regexes:
+          - 'DAMAGE_ALL'
+          - '.*'
+      '2':
+        type: CUSTOM_NAME
+        regexes:
+          - '.*'
+      '3':
+        type: LORE
+        regexes:
+          - '.*'
+          - '已绑定'
+      '4':
+        type: ENUM
+        regexes:
+          - '.*_BOX'
+          - 'DIAMOND'
   interval: 300 # 间隔，秒
-  countdown_second: 60 # 倒计时，秒
+  countdown_seconds: 60 # 倒计时，秒
+# 实体生成间隔限制
+entity_spawn_interval_limit:
+  enabled: true # 是否开启
+  worlds: # 世界正则表达式
+    - '.*'
+  intervals:
+    '1':
+      interval: 1000
+      target:
+        includes: # 包含
+          '1':
+            type: ENUM
+            regexes:
+              - 'ZOMBIE'
+        excludes: {}
 # 区块密集实体清理
 anti_entity_farm:
-  enabled: true
+  enabled: true # 是否开启
   check_event: true # 同时检查事件，这会导致区块实体数量到达阈值时无法使用生成蛋等方式生成
   interval: 15   # 检测间隔，秒
-  worlds:
-    # 世界
-    'world':
-      MINECART: 5 # 矿车
-      ZOMBIE: 5 # 僵尸
-      SPIDER: 5
+  worlds: # 世界正则表达式
+    - '.*'
+  limits:
+    '1':
+      threshold: 3
+      target:
+        includes: # 包含
+          '1':
+            type: INSTANCE_OF
+            classes:
+              - 'Monster'
+        excludes: # 除外（优先级高）
+          '1':
+            type: METADATA
+            metadata:
+              - 'MyPet'
+              - 'NPC'
+          '2':
+            type: ENUM
+            regexes:
+              - 'ENDER_DRAGON'
+              - 'ZOMBIE_VILLAGER'
 # QuickShop 偷东西bug修复
 quickshop_bug_fix:
-  enabled: true
-# 怪物生成间隔限制
-entity_spawn_interval_limit:
-  enabled: true
-  types:
-    'ZOMBIE': 1000 # 毫秒
+  enabled: true # 是否开启
 # 禁止非法软件
 anti_illegal_player:
-  enabled: false
+  enabled: false # 是否开启
   deop_on_quit: true # 下线就取消OP
   survival_mode_on_quit: true # 下线就设置为生存模式
   creative_whitelist: # 创造模式白名单
     - 'July_ss'
-  op_whitelist:   # OP 白名单
+  op_whitelist: # OP 白名单
     - 'July_ss'
 # 红石限制
 redstone_limit:
-  enabled: true
-  worlds: # 世界，通配符 *
-    - '*'
-  tps: 20   # 低于 tps 将启用限制
-  duration: 10   # 检测持续时间
+  enabled: true # 是否开启
+  worlds: # 世界正则表达式
+    - '.*'
+  tps: 20 # 低于 tps 将启用限制
+  duration: 10 # 检测持续时间
   threshold: 6 # 阈值
   ban_duration: 120   # 封禁时间，秒
   notify_interval: 10 # 通知间隔
 # 农作物防踩踏
 anti_trample_crop:
-  enabled: true
+  enabled: true # 是否开启
 # 聊天限制
 chat_limit:
-  enabled: true
+  enabled: true # 是否开启
   interval: 3 # # 两次发言间隔，秒
-  bad_words: # 过滤正则表达式
+  bad_words: # 正则表达式
     - 'nmsl'
     - '[草操艹]你[吗妈]'
-  replace_string: '*' # 替换字符串
+  replace_string: '*' # 替换字符串，
   cancelled: false # 是否直接取消发送
+# 自动重启
+auto_restart:
+  enabled: true
+  bossbar:
+    color: YELLOW
+    style: SOLID
+  times: # 24小时制
+    - '23:00:00'
+  countdown_seconds: 60 # 倒计时时间
+  before_commands: # 重启前执行的指令
+    - 'save-all'

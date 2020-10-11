@@ -1,4 +1,4 @@
-package com.github.julyss2019.bukkit.plugins.julysafe.listener;
+package com.github.julyss2019.bukkit.plugins.julysafe.listeners;
 
 import com.github.julyss2019.bukkit.plugins.julysafe.JulySafe;
 import com.github.julyss2019.mcsp.julylibrary.logger.Logger;
@@ -17,7 +17,7 @@ public class EntitySpawnIntervalLimitListener implements Listener {
 
     @EventHandler
     public void onCreatureSpawnEvent(CreatureSpawnEvent event) {
-        EntityType entityType = event.getEntityType();
+/*        EntityType entityType = event.getEntityType();
         long limit = JulySafe.getInstance().getMainConfigHelper().getEntitySpawnIntervalLimit(entityType);
 
         if (limit == -1) {
@@ -30,6 +30,6 @@ public class EntitySpawnIntervalLimitListener implements Listener {
             return;
         }
 
-        lastSpawnMap.put(entityType, System.currentTimeMillis());
+        lastSpawnMap.put(entityType, System.currentTimeMillis());*/
     }
 }
