@@ -50,4 +50,4 @@
 
    将 dest 改为服务端的路径。
 
-4. mvn clean packge
+4. mvn clean package
