@@ -34,7 +34,7 @@ clean_entity:
           - 'MyPet'
           - 'NPC'
       '2':
-        type: NAME
+        type: CUSTOM_NAME
         regexes:
           - '.*'
       '3':
@@ -107,7 +107,7 @@ anti_entity_farm:
       target:
         includes: # 包含
           '1':
-            type: INSTANCE_OF
+            type: CLASS
             classes:
               - 'Monster'
         excludes: # 除外（优先级高）

@@ -34,6 +34,8 @@ public class CleanDropTask extends BukkitRunnable {
 
     @Override
     public void run() {
+        counter++;
+
         int countdown = getCountdown();
 
         if (countdown == 0) {
@@ -73,7 +75,6 @@ public class CleanDropTask extends BukkitRunnable {
                     .add("seconds", String.valueOf(countdown)))));
             bossBar.setProgress((double) (getCountdown()) / mainConfig.getCleanDropCountdownSecond());
         }
-
     }
 
     public void onDisabled() {

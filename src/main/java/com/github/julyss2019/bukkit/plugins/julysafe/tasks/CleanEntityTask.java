@@ -32,6 +32,8 @@ public class CleanEntityTask extends BukkitRunnable {
 
     @Override
     public void run() {
+        counter++;
+
         int countdown = getCountdown();
 
         if (countdown == 0) {
@@ -70,8 +72,6 @@ public class CleanEntityTask extends BukkitRunnable {
                             .add("seconds", String.valueOf(countdown)))));
             bossBar.setProgress((double) (getCountdown()) / mainConfig.getCleanEntityCountdownSecond());
         }
-
-        counter++;
     }
 
     public void onDisabled() {
