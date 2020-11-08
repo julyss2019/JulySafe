@@ -157,7 +157,7 @@ chat_limit:
   cancelled: false # 是否直接取消发送
 # 自动重启
 auto_restart:
-  enabled: true
+  enabled: false
   bossbar:
     color: YELLOW
     style: SOLID
