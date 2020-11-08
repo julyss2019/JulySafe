@@ -38,4 +38,11 @@ public class MetadataEntityMatcher extends BaseEntityMatcher {
 
         return false;
     }
+
+    @Override
+    public String toString() {
+        return "MetadataEntityMatcher{" +
+                "names=" + names +
+                '}';
+    }
 }

@@ -44,4 +44,11 @@ public class LoreDropMatcher extends BaseDropMatcher {
 
         return false;
     }
+
+    @Override
+    public String toString() {
+        return "LoreDropMatcher{" +
+                "regexes=" + regexes +
+                '}';
+    }
 }

@@ -42,4 +42,12 @@ public class EnumEntityMatcher extends BaseEntityMatcher {
     public boolean isMatched(@NotNull Entity entity) {
         return this.entityTypes.contains(entity.getType());
     }
+
+    @Override
+    public String toString() {
+        return "EnumEntityMatcher{" +
+                "regexes=" + regexes +
+                ", entityTypes=" + entityTypes +
+                '}';
+    }
 }

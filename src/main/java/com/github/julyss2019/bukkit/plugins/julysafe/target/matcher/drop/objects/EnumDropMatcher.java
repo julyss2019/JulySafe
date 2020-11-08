@@ -42,4 +42,12 @@ public class EnumDropMatcher extends BaseDropMatcher {
     public boolean isMatched(@NotNull Item Item) {
         return this.materials.contains(Item.getItemStack().getType());
     }
+
+    @Override
+    public String toString() {
+        return "EnumDropMatcher{" +
+                "regexes=" + regexes +
+                ", materials=" + materials +
+                '}';
+    }
 }

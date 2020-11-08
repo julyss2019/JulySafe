@@ -49,6 +49,14 @@ public class EnchantmentDropMatcher extends BaseDropMatcher {
             }
         }
 
-        return true;
+        return false;
+    }
+
+    @Override
+    public String toString() {
+        return "EnchantmentDropMatcher{" +
+                "regexes=" + regexes +
+                ", enchantments=" + enchantments +
+                '}';
     }
 }

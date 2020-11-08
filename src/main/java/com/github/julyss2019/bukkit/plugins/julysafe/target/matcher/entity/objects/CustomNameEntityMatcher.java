@@ -35,7 +35,8 @@ public class CustomNameEntityMatcher extends BaseEntityMatcher {
     public boolean isMatched(@NotNull Entity entity) {
         String entityCustomName = entity.getCustomName();
 
-        if (entityCustomName == null) {
+        // 特别注意，没名字可能是空字符串
+        if (entityCustomName == null || entityCustomName.equals("")) {
             return false;
         }
 
@@ -46,5 +47,12 @@ public class CustomNameEntityMatcher extends BaseEntityMatcher {
         }
 
         return false;
+    }
+
+    @Override
+    public String toString() {
+        return "CustomNameEntityMatcher{" +
+                "regexes=" + regexes +
+                '}';
     }
 }

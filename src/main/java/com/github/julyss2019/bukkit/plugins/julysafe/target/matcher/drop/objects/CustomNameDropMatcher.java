@@ -33,7 +33,8 @@ public class CustomNameDropMatcher extends BaseDropMatcher {
     public boolean isMatched(@NotNull Item item) {
         String displayName = ItemUtil.getDisplayName(item.getItemStack());
 
-        if (displayName == null) {
+        // 特别注意，没名字可能是空字符串
+        if (displayName == null || displayName.equals("")) {
             return false;
         }
 
@@ -44,5 +45,12 @@ public class CustomNameDropMatcher extends BaseDropMatcher {
         }
 
         return false;
+    }
+
+    @Override
+    public String toString() {
+        return "CustomNameDropMatcher{" +
+                "regexes=" + regexes +
+                '}';
     }
 }

@@ -64,4 +64,12 @@ public class ClassEntityMatcher extends BaseEntityMatcher {
     public boolean isMatched(@NotNull Entity entity) {
         return entityTypes.contains(entity.getType());
     }
+
+    @Override
+    public String toString() {
+        return "ClassEntityMatcher{" +
+                "classes=" + classes +
+                ", entityTypes=" + entityTypes +
+                '}';
+    }
 }
