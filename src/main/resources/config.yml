@@ -121,6 +121,10 @@ anti_entity_farm:
             regexes:
               - 'ENDER_DRAGON'
               - 'ZOMBIE_VILLAGER'
+          '3':
+            type: CUSTOM_NAME
+            regexes:
+              - '.*'
 # QuickShop 偷东西bug修复
 quickshop_bug_fix:
   enabled: true # 是否开启
