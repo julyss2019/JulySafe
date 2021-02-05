@@ -15,9 +15,12 @@ import com.github.julyss2019.mcsp.julylibrary.JulyLibraryAPI;
 import com.github.julyss2019.mcsp.julylibrary.logger.Logger;
 import com.github.julyss2019.mcsp.julylibrary.utilv2.PluginUtil;
 import org.bukkit.Bukkit;
+import org.bukkit.boss.BossBar;
 import org.bukkit.event.HandlerList;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.scheduler.BukkitRunnable;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
@@ -25,9 +28,6 @@ import java.io.File;
 public class JulySafe extends JavaPlugin {
     private static JulySafe instance;
     private TpsTask tpsTask;
-    private CleanDropTask cleanDropTask;
-    private CleanEntityTask cleanEntityTask;
-    private AutoRestartTask autoRestartTask;
     private CustomCommandHandler commandHandler;
     private MainConfig mainConfig;
     private MainConfigHelper mainConfigHelper;
@@ -52,6 +52,17 @@ public class JulySafe extends JavaPlugin {
 
         configLoader.load();
 
+        boolean old = getConfig().getBoolean("quickshop_bug_fix.enabled");
+
+        getConfig().set("quickshop_bug_fix.enabled", false);
+
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                getConfig().set("quickshop_bug_fix.enabled", old);
+            }
+        }.runTask(this);
+
         this.commandHandler = new CustomCommandHandler();
         this.mainConfigHelper = new MainConfigHelper();
         this.langHelper = new LangHelper();
@@ -64,7 +75,7 @@ public class JulySafe extends JavaPlugin {
         runTasks();
         new Metrics(this, 8485);
         pluginLogger.info("&f插件版本: v" + getDescription().getVersion() + ".");
-        pluginLogger.info("&f插件交流群: 1148417878.");
+        pluginLogger.info("&f插件技术支持群(发电后入群): 1148417878.");
         pluginLogger.info("&f插件初始化完毕.");
     }
 
@@ -91,13 +102,7 @@ public class JulySafe extends JavaPlugin {
 
     @Override
     public void onDisable() {
-        if (cleanEntityTask != null) {
-            cleanEntityTask.onDisabled();
-        }
-
-        if (cleanDropTask != null) {
-            cleanDropTask.onDisabled();
-        }
+        globalBossBarManager.getGlobalBars().forEach(BossBar::removeAll);
     }
 
     public Logger getPluginLogger() {
@@ -137,11 +142,11 @@ public class JulySafe extends JavaPlugin {
         (this.tpsTask = new TpsTask()).runTaskTimer(this, 0L, 20L);
 
         if (mainConfig.isCleanDropEnabled()) {
-            (this.cleanDropTask = new CleanDropTask()).runTaskTimer(this, 0L, 20L);
+            new CleanDropTask().runTaskTimer(this, 0L, 20L);
         }
 
         if (mainConfig.isCleanEntityEnabled()) {
-            (this.cleanEntityTask = new CleanEntityTask()).runTaskTimer(this, 0L, 20L);
+            new CleanEntityTask().runTaskTimer(this, 0L, 20L);
         }
 
         if (mainConfig.isAntiEntityFarmEnabled()) {
@@ -153,16 +158,22 @@ public class JulySafe extends JavaPlugin {
         }
 
         if (mainConfig.isAutoRestartEnabled()) {
-            (this.autoRestartTask = new AutoRestartTask()).runTaskTimer(this, 0L, 20L);
+            new AutoRestartTask().runTaskTimer(this, 0L, 20L);
         }
     }
 
     private void registerListeners() {
         PluginManager pluginManager = Bukkit.getPluginManager();
 
-        if (mainConfig.isQucikshopBugFixEnabled()) {
-            pluginManager.registerEvents(new QuickShopBugFixListener(), this);
-        }
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                if (pluginManager.isPluginEnabled("QuickShop") && mainConfig.isQucikshopBugFixEnabled() && !pluginManager.getPlugin("QuickShop")
+                        .getDescription().getAuthors().contains("Ghost_chu")) {
+                    pluginManager.registerEvents(new QuickShopBugFixListener(), JulySafe.this);
+                }
+            }
+        }.runTask(this);
 
         if (mainConfig.isAntiEntityFarmEnabled()) {
             pluginManager.registerEvents(new AntiEntityFarmListener(), this);

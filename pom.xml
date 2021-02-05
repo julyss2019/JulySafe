@@ -6,7 +6,64 @@
 
     <groupId>com.github.julyss2019.bukkit.plugins</groupId>
     <artifactId>JulySafe</artifactId>
-    <version>2.0.1</version>
+    <version>2.0.2</version>
+
+
+    <profiles>
+        <profile>
+            <id>copyer</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>com.github.julyss2019.maven.plugins</groupId>
+                        <artifactId>copyer-plugin</artifactId>
+                        <version>1.0.0</version>
+                        <executions>
+                            <execution>
+                                <goals>
+                                    <goal>os-copy</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                        <configuration>
+                            <osCopyers>
+                                <osCopyer>
+                                    <source>${build.directory}/${build.finalName}.jar</source>
+                                    <operatingSystems>
+                                        <operatingSystem>
+                                            <name>Mac OS X</name>
+                                            <dests>
+                                                <dest>
+                                                    /Users/july_ss/Desktop/july_ss/mc_servers/1.12.2/plugins/${artifactId}.jar
+                                                </dest>
+                                            </dests>
+                                            <overwrite>true</overwrite>
+                                        </operatingSystem>
+                                        <operatingSystem>
+                                            <name>Windows 10</name>
+                                            <dests>
+                                                <dest>G:\july_ss\mc_servers\1.7.10_kc\plugins\${artifactId}.jar</dest>
+                                                <dest>G:\july_ss\mc_servers\1.7.10_uranium\plugins\${artifactId}.jar</dest>
+                                                <dest>G:\july_ss\mc_servers\1.7.10_paper\plugins\${artifactId}.jar</dest>
+                                                <dest>G:\july_ss\mc_servers\1.12.2_paper\plugins\${artifactId}.jar</dest>
+                                                <dest>G:\july_ss\mc_servers\1.12.2_catserver\plugins\${artifactId}.jar</dest>
+                                                <dest>G:\july_ss\mc_servers\1.7.2_paper\plugins\${artifactId}.jar</dest>
+                                                <dest>G:\july_ss\mc_servers\1.7.10_paper\plugins\${artifactId}.jar</dest>
+                                                <dest>G:\july_ss\mc_servers\1.8.8_paper\plugins\${artifactId}.jar</dest>
+                                                <dest>G:\july_ss\mc_servers\1.15.2_paper\plugins\${artifactId}.jar</dest>
+                                                <dest>G:\july_ss\mc_servers\1.14.4_paper\plugins\${artifactId}.jar</dest>
+                                            </dests>
+                                            <overwrite>true</overwrite>
+                                        </operatingSystem>
+                                    </operatingSystems>
+                                </osCopyer>
+                            </osCopyers>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
 
     <repositories>
         <repository>
@@ -19,7 +76,7 @@
         <dependency>
             <groupId>com.github.julyss2019.bukkit.plugins</groupId>
             <artifactId>JulyLibrary</artifactId>
-            <version>2.4.2</version>
+            <version>2.4.7</version>
             <scope>provided</scope>
         </dependency>
         <dependency>

@@ -42,7 +42,6 @@ public class AutoRestartTask extends BukkitRunnable {
             if (nowSeconds == timeSeconds) {
                 logger.info("[auto_restart] [restart] now = " + SDF.format(new Date()));
                 mainConfig.getAutoRestartBeforeCommands().forEach(s -> Bukkit.dispatchCommand(Bukkit.getConsoleSender(), s));
-                globalBossBarManager.unregisterGlobalBar(bossBar);
                 Bukkit.getServer().shutdown();
                 return;
             }

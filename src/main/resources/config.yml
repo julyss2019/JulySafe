@@ -128,7 +128,7 @@ anti_entity_farm:
 # QuickShop 偷东西bug修复
 quickshop_bug_fix:
   enabled: true # 是否开启
-# 禁止非法软件
+# 禁止非法插件
 anti_illegal_player:
   enabled: false # 是否开启
   deop_on_quit: true # 下线就取消OP

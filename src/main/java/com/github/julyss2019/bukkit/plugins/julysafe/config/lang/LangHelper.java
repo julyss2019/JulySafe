@@ -9,8 +9,6 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 public class LangHelper {
-    private Lang rootLang = JulySafe.getInstance().getLang();
-
     public void sendMsg(@NotNull CommandSender sender, @NotNull String msg) {
         JulyMessage.sendColoredMessage(sender, handleText(msg, null));
     }
@@ -30,7 +28,7 @@ public class LangHelper {
     public String handleText(@NotNull String text, @Nullable PlaceholderContainer placeholderContainer) {
         String result;
 
-        result = JulyText.setPlaceholders(text, new PlaceholderContainer().add("prefix", rootLang.getString("prefix")));
+        result = JulyText.setPlaceholders(text, new PlaceholderContainer().add("prefix", JulySafe.getInstance().getLang().getString("prefix")));
 
         if (placeholderContainer != null) {
             result = JulyText.setPlaceholders(result, placeholderContainer);

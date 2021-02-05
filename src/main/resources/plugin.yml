@@ -5,6 +5,7 @@ main: com.github.julyss2019.bukkit.plugins.julysafe.JulySafe
 api-version: 1.13
 softdepend:
   - JulyLibrary
+  - QuickShop
 commands:
   julysafe:
     aliases:
