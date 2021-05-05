@@ -5,6 +5,7 @@ import com.github.julyss2019.bukkit.plugins.julysafe.config.lang.Lang;
 import com.github.julyss2019.bukkit.plugins.julysafe.config.lang.LangHelper;
 import com.github.julyss2019.bukkit.plugins.julysafe.config.lang.LangNode;
 import com.github.julyss2019.mcsp.julylibrary.logger.Logger;
+import com.github.julyss2019.mcsp.julylibrary.utilv2.NMSUtil;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
@@ -28,8 +29,11 @@ public class QuickShopBugFixListener implements Listener {
 
         Player player = event.getPlayer();
         Material itemStackType = event.getItemInHand().getType();
+        boolean above1_12 = NMSUtil.compareVersion("v1_12_R1") > 0;
 
-        if (itemStackType == Material.HOPPER || (itemStackType == Material.RAIL
+        if (itemStackType == Material.HOPPER
+                || ((above1_12 && itemStackType == Material.valueOf("RAIL"))
+                || ((!above1_12 && itemStackType == Material.valueOf("RAILS")))
                 || itemStackType == Material.ACTIVATOR_RAIL
                 || itemStackType == Material.DETECTOR_RAIL
                 || itemStackType == Material.POWERED_RAIL)) {

@@ -2,7 +2,7 @@ package com.github.julyss2019.bukkit.plugins.julysafe.command.objects;
 
 import com.github.julyss2019.bukkit.plugins.julysafe.JulySafe;
 import com.github.julyss2019.bukkit.plugins.julysafe.config.lang.LangHelper;
-import com.github.julyss2019.bukkit.plugins.julysafe.util.Util;
+import com.github.julyss2019.bukkit.plugins.julysafe.utils.Util;
 import com.github.julyss2019.mcsp.julylibrary.commandv2.JulyCommand;
 import com.github.julyss2019.mcsp.julylibrary.commandv2.MainCommand;
 import com.github.julyss2019.mcsp.julylibrary.commandv2.SenderType;

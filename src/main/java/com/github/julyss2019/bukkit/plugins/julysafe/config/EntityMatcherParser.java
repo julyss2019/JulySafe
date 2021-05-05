@@ -16,7 +16,7 @@ public class EntityMatcherParser {
         try {
             entityMatcher = matcherClass.getConstructor(ConfigurationSection.class).newInstance(section);
         } catch (Exception e) {
-            throw new RuntimeException("create drop matcher failed", e);
+            throw new RuntimeException("create entity matcher failed", e);
         }
 
         return entityMatcher;

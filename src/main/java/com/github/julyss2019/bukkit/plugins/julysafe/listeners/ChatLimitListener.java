@@ -5,7 +5,7 @@ import com.github.julyss2019.bukkit.plugins.julysafe.config.MainConfig;
 import com.github.julyss2019.bukkit.plugins.julysafe.config.lang.Lang;
 import com.github.julyss2019.bukkit.plugins.julysafe.config.lang.LangHelper;
 import com.github.julyss2019.bukkit.plugins.julysafe.config.lang.LangNode;
-import com.github.julyss2019.bukkit.plugins.julysafe.util.Util;
+import com.github.julyss2019.bukkit.plugins.julysafe.utils.Util;
 import com.github.julyss2019.mcsp.julylibrary.text.PlaceholderContainer;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;

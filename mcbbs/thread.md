@@ -130,7 +130,6 @@ https://afdian.net/@july_ss
 购买后你将获得：
 
 * 可直接下载的最新插件 x 1
-* 作者编写的使用文档 x 1
 * 本插件问题咨询服务
 
 > 本插件所用所有代码均为原创，不存在借用/抄袭等行为。
@@ -138,3 +137,10 @@ https://afdian.net/@july_ss
 > 插件技术支持售后群：1148417878。
 >
 
+## 使用文档
+
+http://julyss2020.gitee.io/julysafewiki/#/
+
+## 使用人数统计
+
+![](https://bstats.org/signatures/bukkit/JulySafe.svg)

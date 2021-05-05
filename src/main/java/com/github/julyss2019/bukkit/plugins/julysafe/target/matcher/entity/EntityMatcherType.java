@@ -1,13 +1,11 @@
 package com.github.julyss2019.bukkit.plugins.julysafe.target.matcher.entity;
 
-import com.github.julyss2019.bukkit.plugins.julysafe.target.matcher.entity.objects.ClassEntityMatcher;
-import com.github.julyss2019.bukkit.plugins.julysafe.target.matcher.entity.objects.EnumEntityMatcher;
-import com.github.julyss2019.bukkit.plugins.julysafe.target.matcher.entity.objects.MetadataEntityMatcher;
-import com.github.julyss2019.bukkit.plugins.julysafe.target.matcher.entity.objects.CustomNameEntityMatcher;
+import com.github.julyss2019.bukkit.plugins.julysafe.target.matcher.entity.objects.*;
 import org.jetbrains.annotations.NotNull;
 
 public enum EntityMatcherType {
     CLASS(ClassEntityMatcher.class)
+    , NAME(NameEntityMatcher.class)
     , ENUM(EnumEntityMatcher.class)
     , METADATA(MetadataEntityMatcher.class)
     , CUSTOM_NAME(CustomNameEntityMatcher.class);

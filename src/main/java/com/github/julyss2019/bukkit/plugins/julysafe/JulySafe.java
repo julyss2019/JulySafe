@@ -15,12 +15,17 @@ import com.github.julyss2019.mcsp.julylibrary.logger.Logger;
 import com.github.julyss2019.mcsp.julylibrary.utilv2.PluginUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.boss.BossBar;
+import org.bukkit.entity.Player;
 import org.bukkit.event.HandlerList;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
+import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.UUID;
 
 public class JulySafe extends JavaPlugin {
     private static JulySafe instance;
@@ -31,6 +36,19 @@ public class JulySafe extends JavaPlugin {
     private ConfigLoader configLoader;
     private Logger pluginLogger;
     private GlobalBossBarManager globalBossBarManager;
+    private final Set<UUID> entityHelperPlayers = new HashSet<>();
+
+    public void addEntityHelperPlayer(@NotNull Player player) {
+        entityHelperPlayers.add(player.getUniqueId());
+    }
+
+    public void removeEntityHelperPlayer(@NotNull Player player) {
+        entityHelperPlayers.remove(player.getUniqueId());
+    }
+
+    public boolean isEntityHelperPlayer(@NotNull Player player) {
+        return entityHelperPlayers.contains(player.getUniqueId());
+    }
 
     @Override
     public void onEnable() {
@@ -73,8 +91,15 @@ public class JulySafe extends JavaPlugin {
         runTasks();
         new Metrics(this, 8485);
         pluginLogger.info("&f插件版本: v" + getDescription().getVersion() + ".");
-        pluginLogger.info("&f插件交流群(发电后入群): 1148417878.");
+        pluginLogger.info("&f作者: 柒 月, QQ: 884633197.");
+        pluginLogger.info("&f下载最新版本, 获取技术支持请加入QQ售后群: 1148417878.");
         pluginLogger.info("&f插件初始化完毕.");
+
+        try {
+            Thread.sleep(3000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     public GlobalBossBarManager getGlobalBossBarManager() {
@@ -190,5 +215,6 @@ public class JulySafe extends JavaPlugin {
         }
 
         pluginManager.registerEvents(new GlobalBossBarListener(), this);
+        pluginManager.registerEvents(new EntityHelperListener(), this);
     }
 }

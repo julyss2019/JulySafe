@@ -2,88 +2,34 @@ package com.github.julyss2019.bukkit.plugins.julysafe.command.objects;
 
 import com.github.julyss2019.bukkit.plugins.julysafe.JulySafe;
 import com.github.julyss2019.bukkit.plugins.julysafe.config.lang.LangHelper;
-import com.github.julyss2019.bukkit.plugins.julysafe.util.Util;
+import com.github.julyss2019.bukkit.plugins.julysafe.utils.Util;
 import com.github.julyss2019.mcsp.julylibrary.commandv2.JulyCommand;
 import com.github.julyss2019.mcsp.julylibrary.commandv2.MainCommand;
 import com.github.julyss2019.mcsp.julylibrary.commandv2.SenderType;
 import com.github.julyss2019.mcsp.julylibrary.commandv2.SubCommand;
 import org.bukkit.Bukkit;
-import org.bukkit.Chunk;
-import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.*;
 
 import java.text.DecimalFormat;
 import java.util.*;
-import java.util.stream.Collectors;
 
 @MainCommand(firstArg = "helper", description = "帮助者相关", permission = Util.ADMIN_PER)
 public class HelperCommand implements JulyCommand {
     private final JulySafe plugin = JulySafe.getInstance();
     private final DecimalFormat decimalFormat = new DecimalFormat("0.00");
 
-    //@SubCommand(firstArg = "helper", description = "${finder.helper}", length = 3, subArgs = {"<世界>", "<类型>", "<条数(-1)>"}, permission = Util.ADMIN_PER, senders = {SenderType.PLAYER, SenderType.CONSOLE})
-    public void findEntities(CommandSender sender, String[] args) {
-        String argWorld = args[0];
-        String argType = args[1];
-        String argAmount = args[2];
+    @SubCommand(firstArg = "toggleEntityHelper", description = "开/关实体帮助者", length = 0, senders = SenderType.PLAYER)
+    public void onEntityHelper(CommandSender sender, String[] args) {
+        Player player = (Player) sender;
 
-        EntityType entityType;
-
-        try {
-            entityType = EntityType.valueOf(argType);
-        } catch (Exception e) {
-            LangHelper.sendMsg(sender, "&c实体类型不合法: " + argType + ".");
-            return;
-        }
-
-        int amount;
-
-        try {
-            amount = Integer.parseInt(argAmount);
-        } catch (Exception e) {
-            LangHelper.sendMsg(sender, "&c数量不合法: " + argAmount + ".");
-            return;
-        }
-
-        if (amount != -1 && amount <= 0) {
-            LangHelper.sendMsg(sender, "&c数量不合法: " + argAmount + ".");
-            return;
-        }
-
-        World world = Bukkit.getWorld(argWorld);
-
-        if (world == null) {
-            LangHelper.sendMsg(sender, "&c数世界不合法: " + argWorld + ".");
-            return;
-        }
-
-        LangHelper.sendMsg(sender, "以下: ");
-
-        List<Entity> filterEntities = world.getEntities().stream().filter(entity -> entity.getType() == entityType).collect(Collectors.toList());
-        Map<Chunk, Integer> counterMap = new HashMap<>();
-        Map<Chunk, Location> sampleLocationMap = new HashMap<>();
-
-        filterEntities.forEach(entity -> {
-            Chunk chunk = entity.getLocation().getChunk();
-
-            counterMap.put(chunk, counterMap.getOrDefault(chunk, 0) + 1);
-
-            if (!sampleLocationMap.containsKey(chunk)) {
-                sampleLocationMap.put(chunk, entity.getLocation());
-            }
-        });
-
-
-        int counter = 0;
-
-        for (Chunk chunk : counterMap.keySet().stream().sorted((o1, o2) -> counterMap.get(o2).compareTo(counterMap.get(o1))).collect(Collectors.toList())) {
-            if (amount == -1 || counter++ < amount) {
-                Location loc = sampleLocationMap.get(chunk);
-
-                LangHelper.sendMsg(sender, "世界 = " + argWorld + ", 区块(" + chunk.getX() + ", " + chunk.getZ() + "), 数量 = " + counterMap.get(chunk) + ", 样本位置 = (" + (int) loc.getX() + ", " + (int) loc.getY() + ", " + (int) loc.getZ() + ")");
-            }
+        if (plugin.isEntityHelperPlayer(player)) {
+            plugin.removeEntityHelperPlayer(player);
+            LangHelper.sendMsg(player, "已关闭.");
+        } else {
+            plugin.addEntityHelperPlayer(player);
+            LangHelper.sendMsg(player, "已开启.");
         }
     }
 
