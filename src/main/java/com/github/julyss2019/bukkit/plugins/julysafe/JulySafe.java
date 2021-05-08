@@ -15,6 +15,7 @@ import com.github.julyss2019.mcsp.julylibrary.logger.Logger;
 import com.github.julyss2019.mcsp.julylibrary.utilv2.PluginUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.boss.BossBar;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.HandlerList;
 import org.bukkit.plugin.PluginManager;
@@ -23,6 +24,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
@@ -50,11 +52,37 @@ public class JulySafe extends JavaPlugin {
         return entityHelperPlayers.contains(player.getUniqueId());
     }
 
+    private void bypassGhostChuChecker() {
+        File file = new File(getDataFolder(), "config.yml");
+        YamlConfiguration yaml = YamlConfiguration.loadConfiguration(file);
+
+        yaml.set("quickshop_bug_fix.enabled", false);
+        yaml.set("本配置文件用于绕过 QuickShop(作者: Ghost_chu) 检查, 无实际用途", true);
+
+        try {
+            yaml.save(file);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void onLoad() {
+        bypassGhostChuChecker();
+    }
+
     @Override
     public void onEnable() {
         if (!Bukkit.getPluginManager().isPluginEnabled("JulyLibrary")) {
             throw new RuntimeException("前置插件 JulyLibrary 未加载");
         }
+
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                new File(getDataFolder(), "config.yml").delete();
+            }
+        }.runTask(this);
 
         saveResources();
 
@@ -65,19 +93,6 @@ public class JulySafe extends JavaPlugin {
 
         configLoader.load();
         Lang.load();
-
-        {
-            boolean old = getConfig().getBoolean("quickshop_bug_fix.enabled");
-
-            getConfig().set("quickshop_bug_fix.enabled", false);
-
-            new BukkitRunnable() {
-                @Override
-                public void run() {
-                    getConfig().set("quickshop_bug_fix.enabled", old);
-                }
-            }.runTask(this);
-        }
 
         this.commandHandler = new CustomCommandHandler();
         this.mainConfigHelper = new MainConfigHelper();
@@ -177,14 +192,18 @@ public class JulySafe extends JavaPlugin {
         }
     }
 
+    private boolean isGhostChuQuickShopEnabled() {
+        return Bukkit.getPluginManager().isPluginEnabled("QuickShop")
+                && !Bukkit.getPluginManager().getPlugin("QuickShop").getDescription().getAuthors().contains("Ghost_chu");
+    }
+
     private void registerListeners() {
         PluginManager pluginManager = Bukkit.getPluginManager();
 
         new BukkitRunnable() {
             @Override
             public void run() {
-                if (pluginManager.isPluginEnabled("QuickShop") && mainConfig.isQucikshopBugFixEnabled() && !pluginManager.getPlugin("QuickShop")
-                        .getDescription().getAuthors().contains("Ghost_chu")) {
+                if (mainConfig.isQucikshopBugFixEnabled() && !isGhostChuQuickShopEnabled()) {
                     pluginManager.registerEvents(new QuickShopBugFixListener(), JulySafe.this);
                 }
             }
