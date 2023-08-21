@@ -4,12 +4,12 @@ import com.github.julyss2019.bukkit.julysafe.core.kotlin.extension.getAsSimpleSt
 import com.github.julyss2019.bukkit.julysafe.core.module.PlayerPickupRecordModule
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
-import org.bukkit.event.player.PlayerDropItemEvent
+import org.bukkit.event.player.PlayerPickupItemEvent
 
 class PlayerPickupRecordListener(private val module: PlayerPickupRecordModule) : Listener {
     @EventHandler
-    fun onPlayerDropItemEvent(event: PlayerDropItemEvent) {
-        val itemDrop = event.itemDrop
+    fun onPlayerDropItemEvent(event: PlayerPickupItemEvent) {
+        val itemDrop = event.item
 
         if (module.worldSet.contains(itemDrop.world)) {
             module.debug("record, item = ${itemDrop.getAsSimpleString()}.")
