@@ -1,0 +1,87 @@
+import org.apache.tools.ant.filters.ReplaceTokens
+
+plugins {
+    id 'maven-publish'
+    id 'com.github.johnrengelman.shadow' version '7.0.0'
+    id 'java'
+    id 'org.jetbrains.kotlin.jvm' version '1.9.0'
+}
+
+group 'com.github.julyss2019'
+version '4.0.4-beta'
+
+publishing {
+    publications {
+        shadow(MavenPublication) { publication ->
+            project.shadow.component(publication)
+
+            artifactId = "JulySafe"
+        }
+    }
+    repositories {
+        mavenLocal()
+    }
+}
+
+shadowJar {
+    archiveBaseName.set(rootProject.name)
+    archiveClassifier.set('')
+
+    final prefix = 'com.github.julyss2019.bukkit.julysafe.core.libs.'
+    relocate 'kotlin', prefix + 'kotlin'
+    relocate 'org.intellij', prefix + 'org.intellij'
+    relocate 'org.jetbrains', prefix + 'org.jetbrains'
+    relocate 'org.apache', prefix + 'org.apache'
+    relocate 'org.codehaus', prefix + 'org.codehaus'
+    relocate 'groovy', prefix + 'groovy'
+}
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+    maven {
+        url 'https://hub.spigotmc.org/nexus/content/repositories/snapshots/'
+    }
+    maven { url 'https://repo.dmulloy2.net/repository/public/' }
+}
+
+dependencies {
+    compileOnly 'com.github.julyss2019:VoidFramework-Bukkit:1.0.2'
+    compileOnly fileTree(dir: 'libs', includes: ['*jar'])
+
+    compileOnly 'org.bukkit:bukkit:1.13.2-R0.1-SNAPSHOT'
+    compileOnly 'org.spigotmc:spigot-api:1.13.2-R0.1-SNAPSHOT'
+    compileOnly group: 'net.md-5', name: 'bungeecord-chat', version: '1.16-R0.4'
+    compileOnly 'com.comphenix.protocol:ProtocolLib:4.8.0'
+
+    implementation 'org.codehaus.groovy:groovy:3.0.17'
+    implementation 'org.jetbrains.kotlin:kotlin-stdlib-jdk8'
+}
+
+test {
+    useJUnitPlatform()
+}
+
+processResources {
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+
+    filesMatching('plugin.yml') {
+        filter(ReplaceTokens, beginToken: '${', endToken: '}', tokens: ['version': project.version])
+    }
+}
+
+compileKotlin {
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+}
+
+compileTestKotlin {
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+}
+
+tasks.register('commonBuild', GradleBuild) {
+    tasks = [':clean', ':shadowJar', ':publishToMavenLocal']
+}

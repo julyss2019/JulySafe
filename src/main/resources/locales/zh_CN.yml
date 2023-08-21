@@ -1,0 +1,18 @@
+prefix: '&a[JulySafe] &c'
+chat_blacklist:
+  cancelled: '${prefix}请文明发言, 你发送的内容已被屏蔽.'
+  replaced:  '${prefix}请文明发言, 你发送的聊天内容部分被屏蔽.'
+chat_spam_limit:
+  denied: '${prefix}请降低语速, 冷却时间: ${cooldown}s.'
+command_spam_limit:
+  denied: '${prefix}请降低使用命令的速度, 冷却时间: ${cooldown}s.'
+command_blacklist:
+  denied: '${prefix}该指令已被禁用.'
+illegal_player_limit:
+  illegal_creative_mode_banned: '${prefix}非法的创造模式.'
+  illegal_op_banned: '${prefix}非法的 OP.'
+redstone_limit:
+  date_time_format: 'yyyy/MM/dd HH:mm:ss'
+  banned: '${prefix}在坐标 (${x},${y},${z}) 检测到高频红石, 红石装置已被断开, 恢复时间: ${expired}.'
+auto_restart:
+  kick_all: '${prefix}服务器重启, 请 5 分钟后重新进入.'

@@ -1,0 +1,7 @@
+name: JulySafe
+author: July_ss
+version: ${version}
+main: com.github.julyss2019.bukkit.julysafe.core.JulySafePlugin
+api-version: 1.13
+depend:
+  - VoidFramework-Bukkit

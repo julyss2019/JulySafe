@@ -1,0 +1,12 @@
+# 开启后将上传一些匿名统计信息
+bStats_enabled: true
+
+# 本土化
+locale: 'zh_CN'
+
+# 任务调度器
+scheduler:
+  # 首次执行延迟
+  delay: 0
+  # 执行间隔，秒
+  period: 300

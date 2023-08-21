@@ -1,0 +1,419 @@
+# 实体清理
+entity_clean:
+  # 是否开启
+  enabled: true
+  # 世界集
+  world_set:
+    # 包含的世界正则表达式
+    includes:
+      - '.*'
+    # 排除的世界正则表达式
+    excludes:
+      - 'excluded_world'
+  # 执行器
+  executor:
+    # 使用调度器
+    type: SCHEDULER
+    # 参数
+    properties:
+      # 优先级
+      priority: 1
+    # 倒计时器
+    countdown_timer:
+      # 倒计时秒数
+      seconds: '1-60'
+      # 倒计时通知
+      notification:
+        # 倒计时类型
+        type: TITLE
+        # 参数
+        properties:
+          title: '&e即将清理生物'
+          subtitle: '&c倒计时 ${countdown} 秒'
+          stay: 20
+          fade_in: 20
+          fade_out: 20
+    # 完成器
+    completer:
+      notification:
+        type: MESSAGE
+        properties:
+          message: '&a[JulySafe] &b清理完毕, 共计清理 &e${total} &b个生物.'
+  # 实体集
+  entity_set:
+    # 包含
+    includes:
+      'entity_filter_1':
+        # 类过滤器
+        type: CLASS
+        properties:
+          classes:
+            - 'org.bukkit.entity.Monster'
+    # 除外
+    excludes:
+      'entity_filter_1':
+        # METADATA 过滤器
+        type: METADATA
+        properties:
+          keys:
+            - 'MyPet' # 宠物插件生物
+            - 'NPC' # Citizens 插件生物
+      'entity_filter_2':
+        # 自定义名过滤器（头顶的名字）
+        type: CUSTOM_NAME
+        properties:
+          regexes:
+            - '.*'
+      'entity_filter_3':
+        # 枚举过滤器
+        type: ENUM
+        properties:
+          regexes:
+            - 'ENDER_DRAGON'
+            - 'ZOMBIE_VILLAGER'
+
+# 区块实体限制
+chunk_entity_limit:
+  # 是否开启
+  enabled: true
+  # 世界集
+  world_set:
+    # 包含的世界正则表达式
+    includes:
+      - '.*'
+    # 排除的世界正则表达式
+    excludes:
+      - 'excluded_world'
+  # 执行器
+  executor:
+    # 定时执行器
+    type: TIMER
+    properties:
+      # 周期，秒
+      period: 0
+    # 显式关闭倒计时器和完成器
+    countdown_timer.enabled: false
+    completer.enabled: false
+  # 限制
+  limits:
+    'limit_1':
+      # 阈值
+      threshold: 10
+      # 实体集
+      entity_set:
+        # 包含
+        includes:
+          'entity_filter_1':
+            type: CLASS
+            properties:
+              classes:
+                - 'org.bukkit.entity.Animals'
+        # 不包含
+        excludes: {}
+
+# 实体生成限制
+entity_spawn_limit:
+  # 是否开启
+  enabled: true
+  # 世界集
+  world_set:
+    # 包含的世界正则表达式
+    includes:
+      - '.*'
+    # 排除的世界正则表达式
+    excludes:
+      - 'excluded_world'
+  # 限制
+  limits:
+    'limit_1':
+      # 生成原因（正则表达式）
+      spawn_reasons:
+        - '.*'
+      # 实体集
+      entity_set:
+        # 包含
+        includes:
+          'entity_filter_1':
+            type: ENUM
+            properties:
+              regexes:
+                - 'PIG_ZOMBIE'
+        # 不包含
+        excludes: {}
+      # 取消生成
+      cancelled: false
+      # 间隔阈值（毫秒，当且仅当 cancelled 不为 true 时有效，可删除该项，默认为 -1，即不限制）
+      interval: 1000
+
+# 清理掉落物
+drop_clean:
+  # 是否开启
+  enabled: true
+  # 世界集
+  world_set:
+    # 包含的世界正则表达式
+    includes:
+      - '.*'
+    # 排除的世界正则表达式
+    excludes:
+      - 'excluded_world'
+  # 执行器
+  executor:
+    # 使用调度器
+    type: SCHEDULER
+    # 参数
+    properties:
+      # 优先级
+      priority: 1
+    # 倒计时器
+    countdown_timer:
+      # 倒计时秒数
+      seconds: '1-60'
+      # 倒计时通知
+      notification:
+        # 倒计时类型
+        type: TITLE
+        # 参数
+        properties:
+          title: '&e即将清理掉落物'
+          subtitle: '&c倒计时 ${countdown} 秒'
+          stay: 20
+          fade_in: 20
+          fade_out: 20
+    # 完成器
+    completer:
+      notification:
+        type: MESSAGE
+        properties:
+          message: '&a[JulySafe] &b清理完毕, 共计清理 &e${total} &b个掉落物.'
+  # 物品集
+  item_set:
+    # 包含
+    includes:
+      'item_filter_1':
+        # 枚举过滤器
+        type: ENUM
+        properties:
+          regexes:
+            - '.*'
+    # 不包含
+    excludes:
+      'item_filter_1':
+        # 附魔过滤器
+        type: ENCHANTMENT
+        properties:
+          regexes:
+            - 'DAMAGE_ALL'
+      'item_filter_2':
+        # 自定义名过滤器
+        type: DISPLAY_NAME
+        properties:
+          regexes:
+            - '.*'
+      'item_filter_3':
+        # LORE 过滤器
+        type: LORE
+        properties:
+          regexes:
+            - '已绑定'
+      'item_filter_4':
+        # 枚举过滤器
+        type: ENUM
+        properties:
+          regexes:
+            - '.*_BOX'
+            - 'DIAMOND'
+
+# 自动重启
+auto_restart:
+  # 是否开启
+  enabled: false
+  # 执行器
+  executor:
+    # 定时执行器
+    type: FIXED_TIME
+    properties:
+      # 24 小时制时间
+      times:
+        - '10:55:00'
+    # 倒计时器
+    countdown_timer:
+      # 倒计时秒数
+      seconds: '1-60'
+      notification:
+        # 倒计时类型
+        type: TITLE
+        # 参数
+        properties:
+          stay: 20
+          fade_in: 20
+          fade_out: 20
+          title: '&a即将重启服务器'
+          subtitle: '&e倒计时: ${countdown} 秒'
+    completer.enabled: false
+  # 重启时执行的指令
+  before_restart_commands:
+    - 'save-all'
+  # 在重启时踢出所有玩家
+  kick_all_before_restart: true
+
+# 玩家丢下掉落物记录
+player_drop_record:
+  # 是否开启
+  enabled: true
+  # 世界集
+  world_set:
+    # 包含的世界正则表达式
+    includes:
+      - '.*'
+    # 排除的世界正则表达式
+    excludes:
+      - 'excluded_world'
+
+# 玩家捡起掉落物记录
+player_pickup_record:
+  # 是否开启
+  enabled: true
+  # 世界集
+  world_set:
+    # 包含的世界正则表达式
+    includes:
+      - '.*'
+    # 排除的世界正则表达式
+    excludes:
+      - 'excluded_world'
+
+# 红石限制
+redstone_limit:
+  # 是否开启
+  enabled: true
+  # 世界集
+  world_set:
+    # 包含的世界正则表达式
+    includes:
+      - '.*'
+    # 排除的世界正则表达式
+    excludes:
+      - 'excluded_world'
+  # 检测器类型
+  # BLOCK_COUNTER 单方块计次器
+  # CHUNK_COUNTER 区块计次器
+  # BLOCK_TIMER 单方块计时器
+  # CHUNK_TIMER 区块计时器
+  detector_type: CHUNK_COUNTER
+  # 方块白名单
+  block_whitelist:
+    - 'DAYLIGHT_DETECTOR'
+  # 检测重置周期（秒）
+  reset_period: 10
+  # 阈值
+  threshold: 5
+  # 封禁时间，秒
+  ban_duration: 120
+  # 通知附近玩家的范围（x,y,z）
+  notify_player_range: '15,255,15'
+  # 封禁通知间隔
+  notify_player_interval: 10
+  # 是否破坏红石装置
+  destroy_block: true
+
+# 非法玩家限制
+illegal_player_limit:
+  # 是否开启
+  enabled: false
+  # 下线就取消OP
+  deop_on_quit: true
+  # 下线就设置为生存模式
+  set_survival_mode_on_quit: true
+  # 创造模式白名单
+  creative_mode_whitelist:
+    - 'July_ss'
+  op_whitelist:
+    - 'July_ss'
+
+# 农作物防踩踏
+crop_trample_limit:
+  # 是否开启
+  enabled: true
+  # 世界集
+  world_set:
+    # 包含的世界正则表达式
+    includes:
+      - '.*'
+    # 排除的世界正则表达式
+    excludes:
+      - 'excluded_world'
+
+# 火蔓延限制
+fire_spread_limit:
+  enabled: true
+  # 世界集
+  world_set:
+    # 包含的世界正则表达式
+    includes:
+      - '.*'
+    # 排除的世界正则表达式
+    excludes:
+      - 'excluded_world'
+
+# 实体爆炸限制
+entity_explode_limit:
+  # 是否开启
+  enabled: true
+  # 世界集
+  world_set:
+    # 包含的世界正则表达式
+    includes:
+      - '.*'
+    # 排除的世界正则表达式
+    excludes:
+      - 'excluded_world'
+
+# 方块爆炸限制
+block_explode_limit:
+  # 是否开启
+  enabled: true
+  # 世界集
+  world_set:
+    # 包含的世界正则表达式
+    includes:
+      - '.*'
+    # 排除的世界正则表达式
+    excludes:
+      - 'excluded_world'
+
+# 聊天刷屏限制
+chat_spam_limit:
+  # 是否开启
+  enabled: true
+  # 最短发言间隔限制
+  threshold: 3000
+
+# 聊天黑名单
+chat_blacklist:
+  # 是否开启
+  enabled: true
+  # 黑名单正则表达式
+  blacklist:
+    - '傻逼'
+    - 'nmsl'
+    - '[草操艹]你[吗妈]'
+  # 替换字符串
+  replace_string: '你是靓仔'
+  # 是否直接取消发送
+  cancel_event: false
+
+# 命令黑名单
+command_blacklist:
+  # 是否开启
+  enabled: true
+  # 黑名单正则表达式
+  blacklist:
+    - '/minecraft:.*'
+
+# 命令使用间隔限制
+command_spam_limit:
+  # 是否开启
+  enabled: true
+  # 阈值
+  threshold: 1000
