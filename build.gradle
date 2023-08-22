@@ -12,10 +12,8 @@ version '4.0.4-beta'
 
 publishing {
     publications {
-        shadow(MavenPublication) { publication ->
-            project.shadow.component(publication)
-
-            artifactId = "JulySafe"
+        maven(MavenPublication) {
+            from components.java
         }
     }
     repositories {
