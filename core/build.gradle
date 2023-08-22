@@ -1,0 +1,45 @@
+import org.apache.tools.ant.filters.ReplaceTokens
+
+plugins {
+    id 'java'
+    id 'com.github.johnrengelman.shadow' version '7.0.0'
+}
+
+version '4.0.4-beta'
+
+shadowJar {
+    archiveBaseName.set(rootProject.name)
+    archiveClassifier.set('')
+
+    final prefix = 'com.github.julyss2019.bukkit.julysafe.core.libs.'
+
+    relocate 'kotlin', prefix + 'kotlin'
+    relocate 'org.intellij', prefix + 'org.intellij'
+    relocate 'org.jetbrains', prefix + 'org.jetbrains'
+    relocate 'org.apache', prefix + 'org.apache'
+    relocate 'org.codehaus', prefix + 'org.codehaus'
+    relocate 'groovy', prefix + 'groovy'
+}
+
+dependencies {
+    implementation project(':api')
+    compileOnly 'com.github.julyss2019:VoidFramework-Bukkit:1.0.2'
+    compileOnly fileTree(dir: 'libs', includes: ['*jar'])
+    compileOnly 'org.bukkit:bukkit:1.13.2-R0.1-SNAPSHOT'
+    compileOnly 'org.spigotmc:spigot-api:1.13.2-R0.1-SNAPSHOT'
+    compileOnly 'net.md-5:bungeecord-chat:1.16-R0.4'
+    compileOnly 'com.comphenix.protocol:ProtocolLib:4.8.0'
+    compileOnly 'org.codehaus.groovy:groovy:3.0.17'
+    implementation 'org.jetbrains.kotlin:kotlin-stdlib-jdk8'
+}
+
+processResources {
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+
+    filesMatching('plugin.yml') {
+        filter(ReplaceTokens, beginToken: '${', endToken: '}', tokens: ['version': project.version])
+    }
+}
+
+
+
