@@ -7,6 +7,10 @@ class DisplayNameItemFilter : RegexesItemFilter() {
     override fun filter(item: Item): Boolean {
         val displayName: String = Items.getDisplayName(item.itemStack) ?: return false
 
+        if (displayName == "") {
+            return false
+        }
+
         return matchRegex(displayName)
     }
 
