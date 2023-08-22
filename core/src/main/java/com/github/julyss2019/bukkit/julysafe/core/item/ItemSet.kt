@@ -8,7 +8,7 @@ import org.bukkit.World
 import org.bukkit.entity.Item
 import org.bukkit.inventory.ItemStack
 
-class ItemSet(override val includes: List<ItemFilter>, override val excludes: List<ItemFilter>) : com.github.julyss2019.bukkit.julysafe.core.InclusiveExclusiveSet<ItemFilter> {
+class ItemSet(override val includes: List<ItemFilter>, override val excludes: List<ItemFilter>) : InclusiveExclusiveSet<ItemFilter> {
     fun contains(item: Item): Boolean {
         for (filter in excludes) {
             if (filter.filter(item)) {

@@ -22,7 +22,7 @@ class ChatSpamLimitListener(private val module: ChatSpamLimitModule) : Listener 
         val player = event.player
         val playerUuid = player.uniqueId
 
-        if (module.context.plugin.checkPermission(player, com.github.julyss2019.bukkit.julysafe.core.Permission.BYPASS_CHAT_SPAM_LIMIT)) {
+        if (module.context.plugin.checkPermission(player, Permission.BYPASS_CHAT_SPAM_LIMIT)) {
             return
         }
 

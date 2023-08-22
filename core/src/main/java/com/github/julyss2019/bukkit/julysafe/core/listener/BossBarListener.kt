@@ -6,7 +6,7 @@ import org.bukkit.event.Listener
 import org.bukkit.event.player.PlayerJoinEvent
 import org.bukkit.event.player.PlayerQuitEvent
 
-class BossBarListener(plugin: com.github.julyss2019.bukkit.julysafe.core.JulySafePlugin) : Listener {
+class BossBarListener(plugin: JulySafePlugin) : Listener {
     private val bossBarManager = plugin.bossBarManager
 
     @EventHandler

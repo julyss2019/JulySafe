@@ -16,7 +16,7 @@ class ChatBlacklistListener(private val module: ChatBlacklistModule) : Listener 
     fun onAsyncPlayerChatEvent(event: AsyncPlayerChatEvent) {
         val player = event.player
 
-        if (module.context.plugin.checkPermission(player, com.github.julyss2019.bukkit.julysafe.core.Permission.BYPASS_CHAT_BLACKLIST)) {
+        if (module.context.plugin.checkPermission(player, Permission.BYPASS_CHAT_BLACKLIST)) {
             return
         }
 

@@ -16,7 +16,7 @@ class CommandBlacklistListener(private val module: CommandBlacklistModule) : Lis
         val commandLine = event.message
         val player = event.player
 
-        if (module.context.plugin.checkPermission(player, com.github.julyss2019.bukkit.julysafe.core.Permission.BYPASS_COMMAND_BLACKLIST)) {
+        if (module.context.plugin.checkPermission(player, Permission.BYPASS_COMMAND_BLACKLIST)) {
             return
         }
 

@@ -7,7 +7,7 @@ import com.github.julyss2019.bukkit.voidframework.command.annotation.CommandBody
 import com.github.julyss2019.bukkit.voidframework.command.annotation.CommandMapping
 import org.bukkit.entity.Player
 
-@CommandMapping(value = "debugger") class DebugCommandGroup(private val plugin: com.github.julyss2019.bukkit.julysafe.core.JulySafePlugin) : CommandGroup {
+@CommandMapping(value = "debugger") class DebugCommandGroup(private val plugin: JulySafePlugin) : CommandGroup {
     private val julySafePlayerManager = plugin.julySafePlayerManager
 
     @CommandBody(value = "debug", description = "开关调试模式") fun debug(player: Player) {

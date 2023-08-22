@@ -18,7 +18,7 @@ class BossBarNotification : Notification {
     override fun notifyAll(messageProcessor: Notification.MessageProcessor) {
         if (bossBar == null) {
             bossBar = Bukkit.createBossBar("-", color, style)
-            com.github.julyss2019.bukkit.julysafe.core.JulySafePlugin.instance.bossBarManager.registerBossBar(bossBar!!)
+            JulySafePlugin.instance.bossBarManager.registerBossBar(bossBar!!)
         }
 
         bossBar!!.setTitle(messageProcessor.process(title))
@@ -33,7 +33,7 @@ class BossBarNotification : Notification {
     override fun clear() {
         super.clear()
 
-        com.github.julyss2019.bukkit.julysafe.core.JulySafePlugin.instance.bossBarManager.unregisterBossBar(bossBar!!)
+        JulySafePlugin.instance.bossBarManager.unregisterBossBar(bossBar!!)
         bossBar = null
     }
 }

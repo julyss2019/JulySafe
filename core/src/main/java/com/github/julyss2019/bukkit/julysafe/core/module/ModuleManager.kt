@@ -5,7 +5,7 @@ import com.github.julyss2019.bukkit.julysafe.core.module.support.ExecutorSupport
 import com.github.julyss2019.bukkit.voidframework.yaml.Yaml
 import java.io.File
 
-class ModuleManager(val plugin: com.github.julyss2019.bukkit.julysafe.core.JulySafePlugin) {
+class ModuleManager(val plugin: JulySafePlugin) {
     private val moduleMap = mutableMapOf<Class<out Module>, Module>()
 
     fun reload() {

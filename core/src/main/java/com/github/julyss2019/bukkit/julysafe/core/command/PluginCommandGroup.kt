@@ -9,7 +9,7 @@ import com.github.julyss2019.bukkit.voidframework.command.annotation.CommandMapp
 import org.bukkit.command.CommandSender
 
 @CommandMapping(value = "plugin")
-class PluginCommandGroup(private val plugin: com.github.julyss2019.bukkit.julysafe.core.JulySafePlugin) : CommandGroup {
+class PluginCommandGroup(private val plugin: JulySafePlugin) : CommandGroup {
     @CommandBody(value = "version", description = "显示插件版本")
     fun version(sender: CommandSender) {
         MessageUtils.sendMessage(sender, "当前版本: ${plugin.description.version}.")

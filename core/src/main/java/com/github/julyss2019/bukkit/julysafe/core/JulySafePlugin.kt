@@ -26,15 +26,15 @@ class JulySafePlugin : JavaPlugin() {
     private val defaultResourcePaths = arrayOf("config.yml", "modules.yml", "locales/zh_CN.yml")
 
     companion object {
-        lateinit var instance: com.github.julyss2019.bukkit.julysafe.core.JulySafePlugin
+        lateinit var instance: JulySafePlugin
             private set
     }
 
-    lateinit var julySafeConfig: com.github.julyss2019.bukkit.julysafe.core.config.JulySafeConfig
+    lateinit var julySafeConfig: JulySafeConfig
         private set
     lateinit var voidLogger: Logger
         private set
-    lateinit var bossBarManager: com.github.julyss2019.bukkit.julysafe.core.bossbar.BossBarManager
+    lateinit var bossBarManager: BossBarManager
         private set
     lateinit var tpsManager: TpsManager
         private set
@@ -42,17 +42,17 @@ class JulySafePlugin : JavaPlugin() {
         private set
     lateinit var localeResource: LocaleResource
         private set
-    lateinit var scheduler: com.github.julyss2019.bukkit.julysafe.core.Scheduler
+    lateinit var scheduler: Scheduler
         private set
     lateinit var julySafePlayerManager: JulySafePlayerManager
         private set
 
     override fun onEnable() {
-        com.github.julyss2019.bukkit.julysafe.core.JulySafePlugin.Companion.instance = this
+        instance = this
         voidLogger = VoidFramework.getLogManager().createSimpleLogger(this)
 
         saveDefaultResources()
-        julySafeConfig = com.github.julyss2019.bukkit.julysafe.core.config.JulySafeConfig(this)
+        julySafeConfig = JulySafeConfig(this)
         julySafeConfig.load()
 
         localeResource = LocaleResource.fromPluginLocaleFolder(julySafeConfig.locale, this)
@@ -67,7 +67,7 @@ class JulySafePlugin : JavaPlugin() {
         scheduler = createScheduler()
 
         julySafePlayerManager = JulySafePlayerManager()
-        bossBarManager = com.github.julyss2019.bukkit.julysafe.core.bossbar.BossBarManager()
+        bossBarManager = BossBarManager()
         moduleManager = ModuleManager(this)
 
         moduleManager.load()
@@ -80,7 +80,7 @@ class JulySafePlugin : JavaPlugin() {
         }
 
         if (julySafeConfig.bStatsEnabled) {
-            com.github.julyss2019.bukkit.julysafe.core.Metrics(this, 8485)
+            Metrics(this, 8485)
         }
 
         voidLogger.info("插件已加载.")
@@ -95,15 +95,15 @@ class JulySafePlugin : JavaPlugin() {
         VoidFramework.getLogManager().unregisterLoggers(this)
     }
 
-    private fun createScheduler(): com.github.julyss2019.bukkit.julysafe.core.Scheduler {
-        return com.github.julyss2019.bukkit.julysafe.core.Scheduler(this, julySafeConfig.scheduler.delay, julySafeConfig.scheduler.period)
+    private fun createScheduler(): Scheduler {
+        return Scheduler(this, julySafeConfig.scheduler.delay, julySafeConfig.scheduler.period)
     }
 
     private fun registerCommands() {
         val commandFramework = VoidFramework.getCommandManager().createCommandFramework(this)
 
-        commandFramework.registerCommandGroup(com.github.julyss2019.bukkit.julysafe.core.command.DebugCommandGroup(this))
-        commandFramework.registerCommandGroup(com.github.julyss2019.bukkit.julysafe.core.command.PluginCommandGroup(this))
+        commandFramework.registerCommandGroup(DebugCommandGroup(this))
+        commandFramework.registerCommandGroup(PluginCommandGroup(this))
     }
 
     fun reload() {
@@ -122,7 +122,7 @@ class JulySafePlugin : JavaPlugin() {
         }
     }
 
-    fun checkPermission(sender: CommandSender, permission: com.github.julyss2019.bukkit.julysafe.core.Permission): Boolean {
-        return sender.hasPermission(permission.toBukkitPermission()) || sender.hasPermission(com.github.julyss2019.bukkit.julysafe.core.Permission.ALL.toBukkitPermission())
+    fun checkPermission(sender: CommandSender, permission: Permission): Boolean {
+        return sender.hasPermission(permission.toBukkitPermission()) || sender.hasPermission(Permission.ALL.toBukkitPermission())
     }
 }

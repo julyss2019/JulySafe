@@ -4,7 +4,7 @@ import com.github.julyss2019.bukkit.julysafe.core.JulySafePlugin
 import org.bukkit.scheduler.BukkitRunnable
 import java.util.*
 
-class TpsManager(private val plugin: com.github.julyss2019.bukkit.julysafe.core.JulySafePlugin) {
+class TpsManager(private val plugin: JulySafePlugin) {
     var tps = 0.0
         private set
     val maxSampleCount = 10
