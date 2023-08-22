@@ -54,7 +54,7 @@ dependencies {
     compileOnly group: 'net.md-5', name: 'bungeecord-chat', version: '1.16-R0.4'
     compileOnly 'com.comphenix.protocol:ProtocolLib:4.8.0'
 
-    implementation 'org.codehaus.groovy:groovy:3.0.17'
+    compileOnly 'org.codehaus.groovy:groovy:3.0.17'
     implementation 'org.jetbrains.kotlin:kotlin-stdlib-jdk8'
 }
 
