@@ -12,7 +12,7 @@ import org.bukkit.event.player.AsyncPlayerChatEvent
 class ChatBlacklistListener(private val module: ChatBlacklistModule) : Listener {
     private val localeResource = module.getLocalResource()
 
-    @EventHandler(priority = EventPriority.MONITOR)
+    @EventHandler(priority = EventPriority.LOWEST)
     fun onAsyncPlayerChatEvent(event: AsyncPlayerChatEvent) {
         val player = event.player
 
