@@ -4,37 +4,39 @@ plugins {
 }
 
 allprojects {
-    group 'com.github.julyss2019'
+    group 'com.github.julyss2019.bukkit'
 
     apply plugin: 'java'
     apply plugin: 'org.jetbrains.kotlin.jvm'
 
     repositories {
-        mavenLocal()
         mavenCentral()
         maven {
             url 'https://hub.spigotmc.org/nexus/content/repositories/snapshots/'
         }
         maven { url 'https://repo.dmulloy2.net/repository/public/' }
-    }
-
-    compileKotlin {
-        kotlinOptions {
-            jvmTarget = '1.8'
+        maven {
+            url = 'http://maven.void01.com/repository/bukkit-plugin/'
+            allowInsecureProtocol = true
         }
     }
 
-    compileTestKotlin {
-        kotlinOptions {
-            jvmTarget = '1.8'
-        }
+    dependencies {
+        compileOnly 'org.jetbrains.kotlin:kotlin-stdlib-jdk8'
+
+        compileOnly 'com.void01.bukkit:void-framework-bukkit-api:2.0.0'
+        compileOnly 'com.void01.bukkit:void-framework-bukkit-api-legacy:2.0.0'
+        compileOnly 'com.void01.bukkit:void-framework-bukkit-common:2.0.0'
+
+        compileOnly 'net.md-5:bungeecord-chat:1.16-R0.4'
+        compileOnly 'org.spigotmc:spigot-api:1.12.2-R0.1-SNAPSHOT'
     }
-}
 
-tasks.register('buildCore', GradleBuild) {
-    tasks = [':core:clean', ':core:shadowJar']
-}
+    kotlin {
+        jvmToolchain(8)
+    }
 
-tasks.register('buildAPI', GradleBuild) {
-    tasks = [':api:clean', ':api:publishToMavenLocal']
+    tasks.withType(JavaCompile) {
+        options.encoding = "UTF-8"
+    }
 }
