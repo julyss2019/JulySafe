@@ -11,9 +11,13 @@ import org.bukkit.event.player.PlayerInteractEvent
 class CropTrampleLimitListener(private val module: CropTrampleLimitModule) : Listener {
     companion object {
         private var material: Material = try {
-            Material.FARMLAND // 高于 1.12.2
-        } catch (ex: NoSuchFieldError) {
-            Material.valueOf("SOIL") // 低于或等于 1.12
+            Material.valueOf("FARMLAND") // 高于 1.12.2
+        } catch (ex: Exception) {
+            try {
+                Material.valueOf("SOIL") // 低于或等于 1.12
+            } catch (ex: Exception) {
+                throw UnsupportedOperationException("Unable to find farmland material")
+            }
         }
     }
 
