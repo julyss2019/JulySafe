@@ -11,6 +11,7 @@ interface EntityFilter {
     enum class Type(val mappingClass: Class<out EntityFilter>) {
         CLASS(ClassEntityFilter::class.java),
         CUSTOM_NAME(CustomNameEntityFilter::class.java),
+        NAME(NameEntityFilter::class.java),
         ENUM(EnumEntityFilter::class.java),
         GROOVY(GroovyEntityFilter::class.java),
         METADATA(MetadataEntityFilter::class.java),
