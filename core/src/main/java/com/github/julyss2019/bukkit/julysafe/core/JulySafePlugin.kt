@@ -16,6 +16,9 @@ import com.github.julyss2019.bukkit.voidframework.command.annotation.CommandMapp
 import com.github.julyss2019.bukkit.voidframework.logging.logger.Logger
 import com.github.julyss2019.bukkit.voidframework.text.PlaceholderContainer
 import com.github.julyss2019.bukkit.voidframework.text.Texts
+import com.void01.bukkit.voidframework.api.common.VoidFramework2
+import com.void01.bukkit.voidframework.api.common.library.Library
+import com.void01.bukkit.voidframework.api.common.library.Repository
 import org.bukkit.Bukkit
 import org.bukkit.command.CommandSender
 import org.bukkit.plugin.java.JavaPlugin
@@ -48,6 +51,16 @@ class JulySafePlugin : JavaPlugin() {
         private set
 
     override fun onEnable() {
+        VoidFramework2.getLibraryManager().load(
+            Library.Builder
+                .create()
+                .setClassLoaderByBukkitPlugin(this)
+                .setDependencyByGradleStyleExpression("org.jetbrains.kotlin:kotlin-stdlib:1.9.10")
+                .addRepositories(Repository.ALIYUN, Repository.CENTRAL)
+                .addSafeRelocation("_kotlin_", "_com.github.julyss2019.bukkit.julysafe.core.lib.kotlin_")
+                .build()
+        )
+
         instance = this
         voidLogger = VoidFramework.getLogManager().createSimpleLogger(this)
 
