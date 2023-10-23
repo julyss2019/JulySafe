@@ -42,7 +42,13 @@ class FixedTimeExecutor : BaseExecutor() {
 
                     lastExecute = now
 
-                    val duration = Duration.between(now, localTime)
+                    var duration = Duration.between(now, localTime)
+
+                    // 如果时间为 0 点，则 duration 是负的，需要修正
+                    if (duration.isNegative) {
+                        duration = duration.plusHours(24)
+                    }
+
                     val countdown: Int = duration.seconds.toInt()
 
                     notifyCountdown(countdown)
