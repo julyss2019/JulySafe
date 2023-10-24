@@ -64,6 +64,8 @@ class JulySafePlugin : JavaPlugin() {
         instance = this
         voidLogger = VoidFramework.getLogManager().createSimpleLogger(this)
 
+        voidLogger.info("插件版本: v${description.version}")
+
         saveDefaultResources()
         julySafeConfig = JulySafeConfig(this)
         julySafeConfig.load()
@@ -83,6 +85,7 @@ class JulySafePlugin : JavaPlugin() {
         bossBarManager = BossBarManager()
         moduleManager = ModuleManager(this)
 
+        voidLogger.info("正在加载模块: ")
         moduleManager.load()
         scheduler.start()
         registerCommands()
@@ -96,9 +99,9 @@ class JulySafePlugin : JavaPlugin() {
             Metrics(this, 8485)
         }
 
-        voidLogger.info("插件已加载.")
         voidLogger.info("作者: 柒 月, QQ: 884633197.")
         voidLogger.info("JulySafe 付费技术支持 QQ 群: 1148417878.")
+        voidLogger.info("插件已加载.")
     }
 
     override fun onDisable() {
