@@ -7,7 +7,7 @@ http://wiki.void01.com/JulySafe/
 
 ## 构建
 1. 构建并发布 [VoidFramework-Bukkit](https://github.com/julyss2019/VoidFramework-Bukkit) 到本地仓库
-2. `gradle commonBuild`
+2. `gradle chean build`
 3. 完成
 
 ## 统计
