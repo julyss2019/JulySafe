@@ -21,7 +21,7 @@ class BossBarNotification : Notification {
             JulySafePlugin.instance.bossBarManager.registerBossBar(bossBar!!)
         }
 
-        bossBar!!.setTitle(messageProcessor.process(title))
+        bossBar!!.title = messageProcessor.process(title)
     }
 
     override fun setProperties(section: Section) {
