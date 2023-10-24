@@ -1,6 +1,5 @@
 package com.github.julyss2019.bukkit.julysafe.core.executor.notification
 
-import com.github.julyss2019.bukkit.julysafe.core.executor.Executor
 import com.github.julyss2019.bukkit.voidframework.yaml.DefaultValue
 import com.github.julyss2019.bukkit.voidframework.yaml.Section
 import org.bukkit.Bukkit
