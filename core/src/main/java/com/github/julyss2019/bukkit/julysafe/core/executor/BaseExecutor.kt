@@ -6,16 +6,22 @@ import com.github.julyss2019.bukkit.julysafe.core.executor.notification.message.
 import com.github.julyss2019.bukkit.julysafe.core.module.Module
 import com.github.julyss2019.bukkit.voidframework.text.PlaceholderContainer
 
-abstract class BaseExecutor :Executor {
+abstract class BaseExecutor : Executor {
     override var countdownTimer: CountdownTimer? = null
     override var completer: Completer? = null
-    override lateinit var task:Executor.Task
+    override lateinit var task: Executor.Task
     override lateinit var module: Module
 
     fun notifyCountdown(countdown: Int) {
         countdownTimer?.let {
             if (it.seconds.contains(countdown)) {
-                it.notification.notifyAll(ColoredPlaceholderMessageProcessor(PlaceholderContainer().put("countdown", countdown)))
+                it.notification.notifyAll(
+                    ColoredPlaceholderMessageProcessor(
+                        PlaceholderContainer().put(
+                            "countdown", countdown
+                        )
+                    )
+                )
             }
         }
     }
