@@ -15,7 +15,7 @@ class BossBarNotification : Notification {
     private lateinit var style: BarStyle
     private var bossBar: BossBar? = null
 
-    override fun notifyAll(messageProcessor: MessageProcessor) {
+    override fun notifyAll(currentCountdown: Int, maxCountdown: Int, messageProcessor: MessageProcessor) {
         if (bossBar == null) {
             bossBar = Bukkit.createBossBar("-", color, style)
             JulySafePlugin.instance.bossBarManager.registerBossBar(bossBar!!)

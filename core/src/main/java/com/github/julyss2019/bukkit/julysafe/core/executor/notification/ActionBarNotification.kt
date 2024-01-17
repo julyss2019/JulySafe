@@ -15,7 +15,7 @@ import org.bukkit.entity.Player
 class ActionBarNotification : Notification {
     private lateinit var message: String
 
-    override fun notifyAll(messageProcessor: MessageProcessor) {
+    override fun notifyAll(currentCountdown: Int, maxCountdown: Int, messageProcessor: MessageProcessor) {
         Bukkit.getOnlinePlayers().forEach { player: Player? ->
             if (NmsUtils.getVersionAsInt() > 1121) {
                 val packetContainer = PacketContainer(PacketType.Play.Server.SET_ACTION_BAR_TEXT)
