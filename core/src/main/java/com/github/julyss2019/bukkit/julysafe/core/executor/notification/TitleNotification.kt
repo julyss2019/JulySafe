@@ -1,5 +1,6 @@
 package com.github.julyss2019.bukkit.julysafe.core.executor.notification
 
+import com.github.julyss2019.bukkit.julysafe.core.executor.notification.message.processor.MessageProcessor
 import com.github.julyss2019.bukkit.voidframework.yaml.DefaultValue
 import com.github.julyss2019.bukkit.voidframework.yaml.Section
 import org.bukkit.Bukkit
@@ -11,7 +12,7 @@ class TitleNotification : Notification {
     private var stay: Int = -1
     private var fadeOut: Int = -1
 
-    override fun notifyAll(messageProcessor: Notification.MessageProcessor) {
+    override fun notifyAll(messageProcessor: MessageProcessor) {
         Bukkit.getOnlinePlayers().forEach {
             it.sendTitle(
                 messageProcessor.process(title),

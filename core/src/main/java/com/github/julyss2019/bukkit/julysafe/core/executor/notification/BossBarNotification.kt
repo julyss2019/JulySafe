@@ -1,7 +1,7 @@
 package com.github.julyss2019.bukkit.julysafe.core.executor.notification
 
 import com.github.julyss2019.bukkit.julysafe.core.JulySafePlugin
-import com.github.julyss2019.bukkit.julysafe.core.executor.Executor
+import com.github.julyss2019.bukkit.julysafe.core.executor.notification.message.processor.MessageProcessor
 import com.github.julyss2019.bukkit.voidframework.yaml.DefaultValue
 import com.github.julyss2019.bukkit.voidframework.yaml.Section
 import org.bukkit.Bukkit
@@ -15,7 +15,7 @@ class BossBarNotification : Notification {
     private lateinit var style: BarStyle
     private var bossBar: BossBar? = null
 
-    override fun notifyAll(messageProcessor: Notification.MessageProcessor) {
+    override fun notifyAll(messageProcessor: MessageProcessor) {
         if (bossBar == null) {
             bossBar = Bukkit.createBossBar("-", color, style)
             JulySafePlugin.instance.bossBarManager.registerBossBar(bossBar!!)

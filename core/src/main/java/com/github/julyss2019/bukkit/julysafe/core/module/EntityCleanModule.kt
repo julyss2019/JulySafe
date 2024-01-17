@@ -2,7 +2,7 @@ package com.github.julyss2019.bukkit.julysafe.core.module
 
 import com.github.julyss2019.bukkit.julysafe.core.entity.EntitySet
 import com.github.julyss2019.bukkit.julysafe.core.executor.Executor
-import com.github.julyss2019.bukkit.julysafe.core.executor.notification.Notification
+import com.github.julyss2019.bukkit.julysafe.core.executor.notification.message.processor.ColoredPlaceholderMessageProcessor
 import com.github.julyss2019.bukkit.julysafe.core.kotlin.extension.getAsSimpleString
 import com.github.julyss2019.bukkit.julysafe.core.module.support.EntitySetSupport
 import com.github.julyss2019.bukkit.julysafe.core.module.support.ExecutorSupport
@@ -31,7 +31,7 @@ import com.github.julyss2019.bukkit.voidframework.yaml.Section
                     }
                 }
 
-                executor.completer?.notification?.notifyAll(Notification.ColoredPlaceholderMessageProcessor(PlaceholderContainer().put("total", total)))
+                executor.completer?.notification?.notifyAll(ColoredPlaceholderMessageProcessor(PlaceholderContainer().put("total", total)))
             }
         }
     }

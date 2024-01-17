@@ -3,7 +3,7 @@ package com.github.julyss2019.bukkit.julysafe.core.module
 
 import com.github.julyss2019.bukkit.julysafe.api.event.DropsCleanedEvent
 import com.github.julyss2019.bukkit.julysafe.core.executor.Executor
-import com.github.julyss2019.bukkit.julysafe.core.executor.notification.Notification
+import com.github.julyss2019.bukkit.julysafe.core.executor.notification.message.processor.ColoredPlaceholderMessageProcessor
 import com.github.julyss2019.bukkit.julysafe.core.item.ItemSet
 import com.github.julyss2019.bukkit.julysafe.core.kotlin.extension.getAsSimpleString
 import com.github.julyss2019.bukkit.julysafe.core.module.support.ExecutorSupport
@@ -36,7 +36,7 @@ class DropCleanModule : BaseModule(), WorldSetSupport, ExecutorSupport, ItemSetS
                 }
 
                 Bukkit.getPluginManager().callEvent(DropsCleanedEvent(cleanedDrops))
-                executor.completer?.notification?.notifyAll(Notification.ColoredPlaceholderMessageProcessor(PlaceholderContainer().put("total", total)))
+                executor.completer?.notification?.notifyAll(ColoredPlaceholderMessageProcessor(PlaceholderContainer().put("total", total)))
             }
         }
     }
