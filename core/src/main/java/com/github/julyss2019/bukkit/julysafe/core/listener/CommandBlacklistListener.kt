@@ -21,7 +21,7 @@ class CommandBlacklistListener(private val module: CommandBlacklistModule) : Lis
         }
 
         for (blacklistRegex in module.blacklistRegexes) {
-            if (blacklistRegex.find(commandLine) != null) {
+            if (blacklistRegex.matches(commandLine)) {
                 event.isCancelled = true
                 Messages.sendColoredMessage(player, localeResource.getString("denied"))
                 module.debug("cancelled, player = ${player.getNameAndUuid()}, command_line = $commandLine, regex = $blacklistRegex.")
