@@ -4,6 +4,8 @@ import com.github.julyss2019.bukkit.julysafe.core.executor.notification.Notifica
 import com.github.julyss2019.bukkit.voidframework.yaml.Section
 
 class CountdownTimer(val seconds: List<Int>, val notification: Notification) {
+    val maxSecond = seconds.max()
+
     object SecondsParser {
         fun parse(expression: String): List<Int> {
             val seconds = mutableListOf<Int>()
