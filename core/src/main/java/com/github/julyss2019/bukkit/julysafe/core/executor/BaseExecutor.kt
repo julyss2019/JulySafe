@@ -2,7 +2,6 @@ package com.github.julyss2019.bukkit.julysafe.core.executor
 
 import com.github.julyss2019.bukkit.julysafe.core.executor.completer.Completer
 import com.github.julyss2019.bukkit.julysafe.core.executor.countdown.CountdownTimer
-import com.github.julyss2019.bukkit.julysafe.core.executor.notification.Notification
 import com.github.julyss2019.bukkit.julysafe.core.executor.notification.message.processor.ColoredPlaceholderMessageProcessor
 import com.github.julyss2019.bukkit.julysafe.core.module.Module
 import com.github.julyss2019.bukkit.voidframework.text.PlaceholderContainer
@@ -19,6 +18,5 @@ abstract class BaseExecutor :Executor {
                 it.notification.notifyAll(ColoredPlaceholderMessageProcessor(PlaceholderContainer().put("countdown", countdown)))
             }
         }
-
     }
 }
