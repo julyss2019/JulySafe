@@ -4,7 +4,11 @@ import org.bukkit.entity.Entity
 
 class CustomNameEntityFilter : RegexesEntityFilter() {
     override fun filter(entity: Entity): Boolean {
-        return matchRegex(entity.customName)
+        return try {
+            matchRegex(entity.customName)
+        } catch (ex: NoClassDefFoundError) {
+            false
+        }
     }
 
     override fun toString(): String {
