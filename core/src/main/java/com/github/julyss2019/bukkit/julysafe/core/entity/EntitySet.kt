@@ -1,14 +1,14 @@
 package com.github.julyss2019.bukkit.julysafe.core.entity
 
 
-import com.github.julyss2019.bukkit.julysafe.core.entity.filter.EntityFilter
+import com.github.julyss2019.bukkit.julysafe.core.entity.filter.CoreEntityFilter
 import com.github.julyss2019.bukkit.voidframework.yaml.Section
 import org.bukkit.World
 import org.bukkit.entity.Entity
 import org.bukkit.entity.Item
 
-class EntitySet(override val includes: List<EntityFilter>, override val excludes: List<EntityFilter>) :
-    com.github.julyss2019.bukkit.julysafe.core.InclusiveExclusiveSet<EntityFilter> {
+class EntitySet(override val includes: List<CoreEntityFilter>, override val excludes: List<CoreEntityFilter>) :
+    com.github.julyss2019.bukkit.julysafe.core.InclusiveExclusiveSet<CoreEntityFilter> {
     fun contains(entity: Entity): Boolean {
         if (entity is Item) {
             return false
@@ -40,9 +40,9 @@ class EntitySet(override val includes: List<EntityFilter>, override val excludes
     object Parser {
         fun parse(section: Section): EntitySet {
             return EntitySet(includes = section.getSection("includes").subSections.map {
-                EntityFilter.Parser.parse(it)
+                CoreEntityFilter.Parser.parse(it)
             }, excludes = section.getSection("excludes").subSections.map {
-                EntityFilter.Parser.parse(it)
+                CoreEntityFilter.Parser.parse(it)
             })
         }
     }

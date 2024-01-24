@@ -1,14 +1,12 @@
 package com.github.julyss2019.bukkit.julysafe.core.entity.filter
 
+import com.github.julyss2019.bukkit.julysafe.api.EntityFilter
 import com.github.julyss2019.bukkit.voidframework.yaml.Section
-import org.bukkit.entity.Entity
 
-interface EntityFilter {
+interface CoreEntityFilter : EntityFilter {
     var id: String
 
-    fun filter(entity: Entity): Boolean
-
-    enum class Type(val mappingClass: Class<out EntityFilter>) {
+    enum class Type(val mappingClass: Class<out CoreEntityFilter>) {
         CLASS(ClassEntityFilter::class.java),
         CUSTOM_NAME(CustomNameEntityFilter::class.java),
         NAME(NameEntityFilter::class.java),
@@ -21,7 +19,7 @@ interface EntityFilter {
     fun setProperties(section: Section)
 
     object Parser {
-        fun parse(section: Section): EntityFilter {
+        fun parse(section: Section): CoreEntityFilter {
             return section.getEnum("type", Type::class.java).mappingClass.newInstance()
                 .apply {
                     id = section.name
