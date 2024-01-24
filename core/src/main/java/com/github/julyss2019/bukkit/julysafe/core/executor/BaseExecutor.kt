@@ -15,12 +15,13 @@ abstract class BaseExecutor : Executor {
     fun notifyCountdown(countdown: Int) {
         countdownTimer?.let {
             if (it.seconds.contains(countdown)) {
-                it.notification.notifyAll(
+                it.notification.notifyCountdown(
                     ColoredPlaceholderMessageProcessor(
                         PlaceholderContainer().put(
                             "countdown", countdown
                         )
-                    )
+                    ), countdown,
+                    countdownTimer!!.maxSecond
                 )
             }
         }

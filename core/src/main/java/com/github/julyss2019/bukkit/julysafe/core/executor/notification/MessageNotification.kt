@@ -6,8 +6,11 @@ import org.bukkit.Bukkit
 
 class MessageNotification : Notification {
     private lateinit var message: String
+    override fun notifyCountdown(messageProcessor: MessageProcessor, currentCountdown: Int, maxCountdown: Int) {
+        notifyCompleted(messageProcessor)
+    }
 
-    override fun notifyAll(messageProcessor: MessageProcessor) {
+    override fun notifyCompleted(messageProcessor: MessageProcessor) {
         Bukkit.broadcastMessage(messageProcessor.process(message))
     }
 

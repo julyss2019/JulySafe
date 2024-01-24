@@ -11,8 +11,11 @@ class TitleNotification : Notification {
     private var fadeIn: Int = -1
     private var stay: Int = -1
     private var fadeOut: Int = -1
+    override fun notifyCountdown(messageProcessor: MessageProcessor, currentCountdown: Int, maxCountdown: Int) {
+        notifyCompleted(messageProcessor)
+    }
 
-    override fun notifyAll(messageProcessor: MessageProcessor) {
+    override fun notifyCompleted(messageProcessor: MessageProcessor) {
         Bukkit.getOnlinePlayers().forEach {
             it.sendTitle(
                 messageProcessor.process(title),

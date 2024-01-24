@@ -14,14 +14,17 @@ class BossBarNotification : Notification {
     private lateinit var color: BarColor
     private lateinit var style: BarStyle
     private var bossBar: BossBar? = null
-
-    override fun notifyAll(messageProcessor: MessageProcessor) {
+    override fun notifyCountdown(messageProcessor: MessageProcessor, currentCountdown: Int, maxCountdown: Int) {
         if (bossBar == null) {
             bossBar = Bukkit.createBossBar("-", color, style)
             JulySafePlugin.instance.bossBarManager.registerBossBar(bossBar!!)
         }
 
         bossBar!!.title = messageProcessor.process(title)
+    }
+
+    override fun notifyCompleted(messageProcessor: MessageProcessor) {
+        throw UnsupportedOperationException("BoosBar is not allowed to notify completed")
     }
 
     override fun setProperties(section: Section) {

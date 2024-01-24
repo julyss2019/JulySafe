@@ -31,7 +31,7 @@ import com.github.julyss2019.bukkit.voidframework.yaml.Section
                     }
                 }
 
-                executor.completer?.notification?.notifyAll(ColoredPlaceholderMessageProcessor(PlaceholderContainer().put("total", total)))
+                executor.completer?.notification?.notifyCompleted(ColoredPlaceholderMessageProcessor(PlaceholderContainer().put("total", total)))
             }
         }
     }

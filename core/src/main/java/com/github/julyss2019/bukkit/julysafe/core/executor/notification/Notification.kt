@@ -4,7 +4,9 @@ import com.github.julyss2019.bukkit.julysafe.core.executor.notification.message.
 import com.github.julyss2019.bukkit.voidframework.yaml.Section
 
 interface Notification {
-    fun notifyAll(messageProcessor: MessageProcessor)
+    fun notifyCountdown(messageProcessor: MessageProcessor, currentCountdown: Int, maxCountdown: Int)
+
+    fun notifyCompleted(messageProcessor: MessageProcessor)
 
     fun clear() {}
 

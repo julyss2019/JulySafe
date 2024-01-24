@@ -36,7 +36,7 @@ class DropCleanModule : BaseModule(), WorldSetSupport, ExecutorSupport, ItemSetS
                 }
 
                 Bukkit.getPluginManager().callEvent(DropsCleanedEvent(cleanedDrops))
-                executor.completer?.notification?.notifyAll(ColoredPlaceholderMessageProcessor(PlaceholderContainer().put("total", total)))
+                executor.completer?.notification?.notifyCompleted(ColoredPlaceholderMessageProcessor(PlaceholderContainer().put("total", total)))
             }
         }
     }

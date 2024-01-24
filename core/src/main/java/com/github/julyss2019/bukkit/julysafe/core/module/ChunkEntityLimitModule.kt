@@ -51,7 +51,7 @@ class ChunkEntityLimitModule : BaseModule(), WorldSetSupport, ExecutorSupport {
                             }
                         }
 
-                        executor.completer?.notification?.notifyAll(ColoredPlaceholderMessageProcessor(PlaceholderContainer().put("total", removed)))
+                        executor.completer?.notification?.notifyCompleted(ColoredPlaceholderMessageProcessor(PlaceholderContainer().put("total", removed)))
                     }
             }
         }
