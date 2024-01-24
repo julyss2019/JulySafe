@@ -4,7 +4,7 @@ plugins {
     id 'com.github.johnrengelman.shadow' version '7.0.0'
 }
 
-version '4.0.7-beta'
+version '4.0.7'
 
 shadowJar {
     archiveBaseName.set('JulySafe')
