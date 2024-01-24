@@ -2,8 +2,6 @@ plugins {
     id 'maven-publish'
 }
 
-version = '1.0.0'
-
 publishing {
     publications {
         maven(MavenPublication) {
