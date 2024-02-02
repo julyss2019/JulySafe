@@ -12,9 +12,9 @@ class BlockExplodeLimitListener(private val module: BlockExplodeLimitModule) : L
         val block = event.block
 
         if (module.worldSet.contains(block.world)) {
-            return
+            event.isCancelled = true
+            event.yield = 0F
+            module.debug("cancelled, location = ${block.location.getAsSimpleString()}.")
         }
-
-        module.debug("cancelled, location = ${block.location.getAsSimpleString()}.")
     }
 }
