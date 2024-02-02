@@ -25,6 +25,7 @@ class TimerExecutor : BaseExecutor() {
 
                 if (countdown == 0) {
                     task.run()
+                    countdownTimer?.notification?.clear()
                     tick = 0
                 } else {
                     tick++
