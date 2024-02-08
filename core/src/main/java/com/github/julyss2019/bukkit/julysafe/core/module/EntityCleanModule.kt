@@ -10,7 +10,6 @@ import com.github.julyss2019.bukkit.julysafe.core.module.support.WorldSetSupport
 import com.github.julyss2019.bukkit.julysafe.core.world.WorldSet
 import com.github.julyss2019.bukkit.voidframework.text.PlaceholderContainer
 import com.github.julyss2019.bukkit.voidframework.yaml.Section
-import org.bukkit.entity.Player
 
 @Module.YamlSectionId("entity_clean") class EntityCleanModule : BaseModule(), WorldSetSupport, ExecutorSupport, EntitySetSupport {
     override lateinit var entitySet: EntitySet
@@ -26,10 +25,6 @@ import org.bukkit.entity.Player
 
                 for (world in worldSet.getAll()) {
                     for (entity in entitySet.getAllByWorld(world)) {
-                        if (entity is Player) {
-                            continue
-                        }
-
                         entity.remove()
                         total++
                         debug("removed, entity = ${entity.getAsSimpleString()}, location = ${entity.location.getAsSimpleString()}.")
