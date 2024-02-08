@@ -5,12 +5,12 @@ import com.github.julyss2019.bukkit.julysafe.core.entity.filter.CoreEntityFilter
 import com.github.julyss2019.bukkit.voidframework.yaml.Section
 import org.bukkit.World
 import org.bukkit.entity.Entity
-import org.bukkit.entity.Item
+import org.bukkit.entity.Player
 
 class EntitySet(override val includes: List<CoreEntityFilter>, override val excludes: List<CoreEntityFilter>) :
     com.github.julyss2019.bukkit.julysafe.core.InclusiveExclusiveSet<CoreEntityFilter> {
     fun contains(entity: Entity): Boolean {
-        if (entity is Item) {
+        if (entity is Player) {
             return false
         }
 
