@@ -1,0 +1,4 @@
+dependencies {
+    compileOnly project(':api')
+    compileOnly 'org.apache.groovy:groovy:4.0.19'
+}
