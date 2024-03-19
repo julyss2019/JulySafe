@@ -25,9 +25,11 @@ import com.github.julyss2019.bukkit.voidframework.yaml.Section
 
                 for (world in worldSet.getAll()) {
                     for (entity in entitySet.getAllByWorld(world)) {
-                        entity.remove()
-                        total++
-                        debug("removed, entity = ${entity.getAsSimpleString()}, location = ${entity.location.getAsSimpleString()}.")
+                        if (entity.isDead) {
+                            entity.remove()
+                            total++
+                            debug("removed, entity = ${entity.getAsSimpleString()}, location = ${entity.location.getAsSimpleString()}.")
+                        }
                     }
                 }
 

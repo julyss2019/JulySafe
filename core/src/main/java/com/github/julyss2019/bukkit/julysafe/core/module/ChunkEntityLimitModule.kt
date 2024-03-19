@@ -29,12 +29,12 @@ class ChunkEntityLimitModule : BaseModule(), WorldSetSupport, ExecutorSupport {
     override fun onEnable() {
         executor.task = object : Executor.Task {
             override fun run() {
+                var removed = 0
+
                 worldSet.getAll()
                     .map { it.loadedChunks }
                     .flatMap { it.asIterable() }
                     .forEach { chunk ->
-                        var removed = 0
-
                         for (limit in limits) {
                             var counter = 0
 
@@ -43,16 +43,21 @@ class ChunkEntityLimitModule : BaseModule(), WorldSetSupport, ExecutorSupport {
                                     counter++
 
                                     if (counter > limit.threshold) {
-                                        entity.remove()
-                                        debug("removed, entity = ${entity.getAsSimpleString()}, chunk = ${chunk.getAsSimpleString()}, location = ${entity.location.getAsSimpleString()}")
-                                        removed++
+                                        if (entity.isDead) {
+                                            entity.remove()
+                                            debug("removed, entity = ${entity.getAsSimpleString()}, chunk = ${chunk.getAsSimpleString()}, location = ${entity.location.getAsSimpleString()}")
+                                            removed++
+                                        }
                                     }
                                 }
                             }
                         }
-
-                        executor.completer?.notification?.notifyCompleted(ColoredPlaceholderMessageProcessor(PlaceholderContainer().put("total", removed)))
                     }
+                executor.completer?.notification?.notifyCompleted(
+                    ColoredPlaceholderMessageProcessor(
+                        PlaceholderContainer().put("total", removed)
+                    )
+                )
             }
         }
     }
