@@ -31,6 +31,7 @@ class EntitySpawnLimitListener(private val module: EntitySpawnLimitModule) : Lis
             if (limit.cancelled) {
                 event.isCancelled = true
                 module.debug("direct cancelled, spawn_reason = $spawnReason, entity = ${entity.getAsSimpleString()}, location = ${entity.location}.")
+                return
             }
 
             if (limit.interval != -1) {

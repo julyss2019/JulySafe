@@ -43,11 +43,9 @@ class ChunkEntityLimitModule : BaseModule(), WorldSetSupport, ExecutorSupport {
                                     counter++
 
                                     if (counter > limit.threshold) {
-                                        if (entity.isDead) {
-                                            entity.remove()
-                                            debug("removed, entity = ${entity.getAsSimpleString()}, chunk = ${chunk.getAsSimpleString()}, location = ${entity.location.getAsSimpleString()}")
-                                            removed++
-                                        }
+                                        entity.remove()
+                                        debug("removed, entity = ${entity.getAsSimpleString()}, chunk = ${chunk.getAsSimpleString()}, location = ${entity.location.getAsSimpleString()}")
+                                        removed++
                                     }
                                 }
                             }
