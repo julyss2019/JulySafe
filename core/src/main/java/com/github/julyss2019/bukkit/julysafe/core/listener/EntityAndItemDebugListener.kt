@@ -7,6 +7,7 @@ import com.github.julyss2019.bukkit.julysafe.core.module.ChunkEntityLimitModule
 import com.github.julyss2019.bukkit.julysafe.core.module.DropCleanModule
 import com.github.julyss2019.bukkit.julysafe.core.module.EntitySpawnLimitModule
 import com.github.julyss2019.bukkit.julysafe.core.module.support.EntitySetSupport
+import com.github.julyss2019.bukkit.julysafe.core.util.NmsUtils
 import com.github.julyss2019.bukkit.voidframework.common.Items
 import org.bukkit.entity.Entity
 import org.bukkit.entity.Item
@@ -42,8 +43,10 @@ class EntityAndItemDebugListener(private val plugin: JulySafePlugin) : Listener 
 
     @Suppress("DuplicatedCode")
     @EventHandler fun onPlayerInteractEntityEvent(event: PlayerInteractEntityEvent) {
-        if (event.hand != EquipmentSlot.HAND) {
-            return
+        if (NmsUtils.getVersionAsInt() >= 1120) {
+            if (event.hand != EquipmentSlot.HAND) {
+                return
+            }
         }
 
         val rightClicked = event.rightClicked
