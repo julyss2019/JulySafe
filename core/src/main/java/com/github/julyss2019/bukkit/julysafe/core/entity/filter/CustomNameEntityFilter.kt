@@ -6,7 +6,7 @@ class CustomNameEntityFilter : RegexesEntityFilter() {
     override fun filter(entity: Entity): Boolean {
         return try {
             matchRegex(entity.customName)
-        } catch (ex: NoClassDefFoundError) {
+        } catch (ex: Exception) { // CatServer 获取 customName 可能会抛出异常
             false
         }
     }
