@@ -2,13 +2,13 @@ package com.github.julyss2019.bukkit.julysafe.core.listener
 
 import com.github.julyss2019.bukkit.julysafe.core.Permission
 import com.github.julyss2019.bukkit.julysafe.core.kotlin.extension.getNameAndUuid
-import com.github.julyss2019.bukkit.julysafe.core.module.CommandBlacklistModule
+import com.github.julyss2019.bukkit.julysafe.core.module.CommandLimitModule
 import com.github.julyss2019.bukkit.voidframework.common.Messages
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
 import org.bukkit.event.player.PlayerCommandPreprocessEvent
 
-class CommandBlacklistListener(private val module: CommandBlacklistModule) : Listener {
+class CommandLimitListener(private val module: CommandLimitModule) : Listener {
     private val localeResource = module.getLocalResource()
 
     @EventHandler(ignoreCancelled = true)
@@ -20,13 +20,11 @@ class CommandBlacklistListener(private val module: CommandBlacklistModule) : Lis
             return
         }
 
-        for (blacklistRegex in module.blacklistRegexes) {
-            if (blacklistRegex.matches(commandLine)) {
-                event.isCancelled = true
-                Messages.sendColoredMessage(player, localeResource.getString("denied"))
-                module.debug("cancelled, player = ${player.getNameAndUuid()}, command_line = $commandLine, regex = $blacklistRegex.")
-                return
-            }
+        if (module.commandSet.contains(commandLine)) {
+            event.isCancelled = true
+            Messages.sendColoredMessage(player, localeResource.getString("denied"))
+            module.debug("cancelled, player = ${player.getNameAndUuid()}, command_line = $commandLine")
+            return
         }
     }
 }

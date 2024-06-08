@@ -75,7 +75,7 @@ interface Module {
             registerModuleClass(FireSpreadLimitModule::class.java)
             registerModuleClass(CropTrampleLimitModule::class.java)
 
-            registerModuleClass(CommandBlacklistModule::class.java)
+            registerModuleClass(CommandLimitModule::class.java)
             registerModuleClass(CommandSpamLimitModule::class.java)
 
             registerModuleClass(ChatSpamLimitModule::class.java)

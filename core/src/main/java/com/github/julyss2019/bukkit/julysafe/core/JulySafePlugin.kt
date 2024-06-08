@@ -1,8 +1,8 @@
 package com.github.julyss2019.bukkit.julysafe.core
 
 import com.github.julyss2019.bukkit.julysafe.core.bossbar.BossBarManager
-import com.github.julyss2019.bukkit.julysafe.core.command.PluginCommandGroup
-import com.github.julyss2019.bukkit.julysafe.core.command.DebugCommandGroup
+import com.github.julyss2019.bukkit.julysafe.core.internal.command.PluginCommandGroup
+import com.github.julyss2019.bukkit.julysafe.core.internal.command.DebugCommandGroup
 import com.github.julyss2019.bukkit.julysafe.core.config.JulySafeConfig
 import com.github.julyss2019.bukkit.julysafe.core.listener.BossBarListener
 import com.github.julyss2019.bukkit.julysafe.core.listener.EntityAndItemDebugListener

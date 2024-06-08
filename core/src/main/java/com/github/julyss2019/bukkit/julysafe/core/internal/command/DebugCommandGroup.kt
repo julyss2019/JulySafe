@@ -1,4 +1,4 @@
-package com.github.julyss2019.bukkit.julysafe.core.command
+package com.github.julyss2019.bukkit.julysafe.core.internal.command
 
 import com.github.julyss2019.bukkit.julysafe.core.JulySafePlugin
 import com.github.julyss2019.bukkit.julysafe.core.util.MessageUtils
