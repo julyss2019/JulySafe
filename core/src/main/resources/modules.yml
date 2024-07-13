@@ -403,13 +403,17 @@ chat_blacklist:
   # 是否直接取消发送
   cancel_event: false
 
-# 命令黑名单
-command_blacklist:
+# 命令限制
+command_limit:
   # 是否开启
   enabled: true
-  # 黑名单正则表达式
-  blacklist:
-    - '/minecraft:.*'
+  # 命令集
+  command_set:
+    # 包含的命令正则表达式
+    includes:
+      - '/minecraft:.*'
+    # 排除的命令正则表达式
+    excludes: {}
 
 # 命令使用间隔限制
 command_spam_limit:

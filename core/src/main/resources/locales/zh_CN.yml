@@ -6,7 +6,7 @@ chat_spam_limit:
   denied: '${prefix}请降低语速, 冷却时间: ${cooldown}s.'
 command_spam_limit:
   denied: '${prefix}请降低使用命令的速度, 冷却时间: ${cooldown}s.'
-command_blacklist:
+command_limit:
   denied: '${prefix}该指令已被禁用.'
 illegal_player_limit:
   illegal_creative_mode_banned: '${prefix}非法的创造模式.'
