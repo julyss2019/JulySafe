@@ -3,16 +3,10 @@ package com.github.julyss2019.bukkit.julysafe.core.util
 import org.bukkit.Bukkit
 
 object NmsUtils {
-    fun getVersion(): String {
-        return Bukkit.getServer().javaClass.`package`.name.let {
-            it.substring(it.lastIndexOf(".") + 1)
-        }
-    }
-
     fun getVersionAsInt(): Int {
-        val version = getVersion()
-        val array = version.split("_")
+        val version = Bukkit.getBukkitVersion().substringBefore("-")
+        val array = version.split(".")
 
-        return (array[0].run { substring(1, length) } + array[1] + array[2].run { substring(1, length) }).toInt()
+        return (array[0] + array[1] + array[2]).toInt()
     }
 }
