@@ -11,6 +11,7 @@ import com.github.julyss2019.bukkit.julysafe.core.module.ModuleManager
 import com.github.julyss2019.bukkit.julysafe.core.player.JulySafePlayerManager
 import com.github.julyss2019.bukkit.julysafe.core.tps.TpsManager
 import com.github.julyss2019.bukkit.julysafe.core.util.FileUtils
+import com.github.julyss2019.bukkit.julysafe.core.util.MinecraftVersion
 import com.github.julyss2019.bukkit.voidframework.VoidFramework
 import com.github.julyss2019.bukkit.voidframework.command.annotation.CommandMapping
 import com.github.julyss2019.bukkit.voidframework.logging.logger.Logger
@@ -63,7 +64,6 @@ class JulySafePlugin : JavaPlugin() {
 
         instance = this
         voidLogger = VoidFramework.getLogManager().createSimpleLogger(this)
-
         voidLogger.info("插件版本: v${description.version}")
 
         saveDefaultResources()

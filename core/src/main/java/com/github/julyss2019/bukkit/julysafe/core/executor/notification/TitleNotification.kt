@@ -6,7 +6,7 @@ import com.comphenix.protocol.events.PacketContainer
 import com.comphenix.protocol.wrappers.EnumWrappers
 import com.comphenix.protocol.wrappers.WrappedChatComponent
 import com.github.julyss2019.bukkit.julysafe.core.executor.notification.message.processor.MessageProcessor
-import com.github.julyss2019.bukkit.julysafe.core.util.NmsUtils
+import com.github.julyss2019.bukkit.julysafe.core.util.MinecraftVersion
 import com.github.julyss2019.bukkit.voidframework.text.Texts
 import com.github.julyss2019.bukkit.voidframework.yaml.DefaultValue
 import com.github.julyss2019.bukkit.voidframework.yaml.Section
@@ -49,7 +49,7 @@ class TitleNotification : Notification {
 
     override fun notifyCompleted(messageProcessor: MessageProcessor) {
         Bukkit.getOnlinePlayers().forEach {
-            if (NmsUtils.getVersionAsInt() >= 1120) {
+            if (MinecraftVersion.getCurrentVersion().compareVersion(12, 0) >= 0) {
                 it.sendTitle(
                     messageProcessor.process(title),
                     messageProcessor.process(subtitle),
