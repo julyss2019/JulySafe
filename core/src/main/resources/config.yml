@@ -1,3 +1,6 @@
+# 日志级别
+log.threshold: INFO
+
 # 开启后将上传一些匿名统计信息
 bStats_enabled: true
 
