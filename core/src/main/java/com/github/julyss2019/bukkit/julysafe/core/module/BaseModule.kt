@@ -13,10 +13,10 @@ abstract class BaseModule : Module {
     }
 
     fun debug(message: String) {
-        context.plugin.voidLogger.debug("[$name] $message")
+        context.plugin.pluginLogger.debug("[$name] $message")
     }
 
     fun info(message: String) {
-        context.plugin.voidLogger.info("[$name] $message")
+        context.plugin.pluginLogger.info("[$name] $message")
     }
 }

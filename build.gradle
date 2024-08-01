@@ -25,9 +25,9 @@ allprojects {
     dependencies {
         compileOnly 'org.jetbrains.kotlin:kotlin-stdlib-jdk8'
 
-        compileOnly 'com.void01.bukkit:void-framework-bukkit-api:2.0.0'
-        compileOnly 'com.void01.bukkit:void-framework-bukkit-api-legacy:2.0.0'
-        compileOnly 'com.void01.bukkit:void-framework-bukkit-common:2.0.0'
+        compileOnly 'com.void01.bukkit:void-framework-bukkit-api:latest'
+        compileOnly 'com.void01.bukkit:void-framework-bukkit-api-legacy:latest'
+        compileOnly 'com.void01.bukkit:void-framework-bukkit-common:latest'
 
         compileOnly 'net.md-5:bungeecord-chat:1.16-R0.4'
         compileOnly 'org.spigotmc:spigot-api:1.12.2-R0.1-SNAPSHOT'

@@ -44,9 +44,9 @@ class ModuleManager(val plugin: JulySafePlugin) {
                         executor.start()
                     }
 
-                    plugin.voidLogger.info("${module.javaClass.simpleName}: 已启用.")
+                    plugin.pluginLogger.info("${module.javaClass.simpleName}: 已启用.")
                 } else {
-                    plugin.voidLogger.info("${module.javaClass.simpleName}: 未启用.")
+                    plugin.pluginLogger.info("${module.javaClass.simpleName}: 未启用.")
                 }
             } catch (ex: Exception) {
                 throw RuntimeException("an exception occurred while loading module", ex)

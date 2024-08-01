@@ -8,9 +8,7 @@ shadowJar {
     archiveBaseName.set('JulySafe')
     archiveClassifier.set('')
 
-    final prefix = 'com.github.julyss2019.bukkit.julysafe.core.lib.'
-
-    relocate 'kotlin', prefix + 'kotlin'
+    relocate 'kotlin', 'kotlin.v1_9_20'
 }
 
 dependencies {
