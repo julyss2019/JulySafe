@@ -14,6 +14,7 @@ shadowJar {
 dependencies {
     implementation project(':api')
     compileOnly 'com.comphenix.protocol:ProtocolLib:4.8.0'
+    compileOnly fileTree(dir: 'libs', include: ['*.jar'])
 }
 
 processResources {

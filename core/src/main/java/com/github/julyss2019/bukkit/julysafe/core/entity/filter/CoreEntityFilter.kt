@@ -13,7 +13,8 @@ interface CoreEntityFilter : EntityFilter {
         ENUM(EnumEntityFilter::class.java),
         GROOVY(GroovyEntityFilter::class.java),
         METADATA(MetadataEntityFilter::class.java),
-        HAS_PASSENGERS(HasPassengersEntityFilter::class.java)
+        HAS_PASSENGERS(HasPassengersEntityFilter::class.java),
+        MYTHIC_MOBS(MythicEntityFilter::class.java)
     }
 
     fun setProperties(section: Section)
