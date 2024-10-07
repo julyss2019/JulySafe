@@ -9,7 +9,7 @@ allprojects {
     apply plugin: 'java'
     apply plugin: 'org.jetbrains.kotlin.jvm'
 
-    version '4.0.12-alpha'
+    version '4.0.12'
 
     repositories {
         mavenCentral()
