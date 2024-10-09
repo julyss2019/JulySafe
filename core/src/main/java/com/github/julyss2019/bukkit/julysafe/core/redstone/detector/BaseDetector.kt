@@ -42,6 +42,7 @@ abstract class BaseDetector : Detector {
 
     protected fun playerDebug(nearbyPlayers: List<Player>, message: String) {
         nearbyPlayers
+            .filter { it.isOnline }
             .map { module.context.plugin.julySafePlayerManager.getJulySafePlayer(it) }
             .filter { it.debugEnabled }
             .forEach {
