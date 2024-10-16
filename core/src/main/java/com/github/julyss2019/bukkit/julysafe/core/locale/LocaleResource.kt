@@ -79,6 +79,9 @@ open class LocaleResource private constructor(val locale: Locale, val resourcesF
             .map { textProcessor.process(it) }
     }
 
+    open fun getOriginalString(key: String) : String {
+        return yaml.getString(key)
+    }
 
     open fun getString(key: String): String {
         return yaml.getString(key)

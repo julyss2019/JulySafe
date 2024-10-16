@@ -54,10 +54,8 @@ class JulySafePlugin : VoidPlugin() {
 
         localeResource = LocaleResource.fromPluginLocaleFolder(julySafeConfig.locale, this)
         localeResource.textProcessor = object : LocaleResource.TextProcessor {
-            val prefix = localeResource.getString("prefix")
-
             override fun process(text: String): String {
-                return Texts.setPlaceholders(text, PlaceholderContainer().put("prefix", prefix))
+                return Texts.setPlaceholders(text, PlaceholderContainer().put("prefix", localeResource.getOriginalString("prefix")))
             }
         }
 
