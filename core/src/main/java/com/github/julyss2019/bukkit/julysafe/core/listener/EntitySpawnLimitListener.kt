@@ -23,8 +23,6 @@ class EntitySpawnLimitListener(private val module: EntitySpawnLimitModule) : Lis
     }
 
     private fun handle(event: Cancellable, spawnReason: CreatureSpawnEvent.SpawnReason, entity: Entity) {
-        println(entity)
-
         if (!module.worldSet.contains(entity.world)) {
             return
         }
