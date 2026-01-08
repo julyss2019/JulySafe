@@ -2,22 +2,32 @@ package com.github.julyss2019.bukkit.julysafe.core.listener
 
 import com.github.julyss2019.bukkit.julysafe.core.kotlin.extension.getAsSimpleString
 import com.github.julyss2019.bukkit.julysafe.core.module.EntitySpawnLimitModule
+import org.bukkit.entity.Entity
+import org.bukkit.event.Cancellable
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
 import org.bukkit.event.entity.CreatureSpawnEvent
+import org.bukkit.event.entity.ProjectileLaunchEvent
 
 class EntitySpawnLimitListener(private val module: EntitySpawnLimitModule) : Listener {
     private val lastSpawnMap = mutableMapOf<EntitySpawnLimitModule.Limit, Long>()
 
     @EventHandler
+    fun onProjectileLaunchEvent(event: ProjectileLaunchEvent) {
+        handle(event, CreatureSpawnEvent.SpawnReason.DEFAULT, event.entity)
+    }
+
+    @EventHandler
     fun onEntitySpawnEvent(event: CreatureSpawnEvent) {
-        val entity = event.entity
+        handle(event, event.spawnReason, event.entity)
+    }
+
+    private fun handle(event: Cancellable, spawnReason: CreatureSpawnEvent.SpawnReason, entity: Entity) {
+        println(entity)
 
         if (!module.worldSet.contains(entity.world)) {
             return
         }
-
-        val spawnReason = event.spawnReason
 
         for (limit in module.limits) {
             if (!limit.spawnReasonRegexes.any { it.matches(spawnReason.name) }) {
